@@ -34,12 +34,12 @@ const MainLayout: React.FC = () => {
   const visibleNavItems = navItems.filter(item => item.roles.includes(role));
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-[var(--color-warm-offwhite)]">
+    <div className="min-h-screen flex flex-col md:flex-row bg-warm-offwhite">
       {/* Sidebar */}
       <aside className="w-full md:w-64 bg-white border-r border-gray-100 flex flex-col">
         <div className="p-6">
-          <h1 className="text-2xl font-bold text-[var(--color-deep-navy)] flex items-center space-x-2">
-            <Compass className="text-[var(--color-soft-teal)]" />
+          <h1 className="text-2xl font-bold text-deep-navy flex items-center space-x-2">
+            <Compass className="text-soft-teal" />
             <span>Meridian</span>
           </h1>
         </div>
@@ -52,8 +52,8 @@ const MainLayout: React.FC = () => {
                 cn(
                   "flex items-center space-x-3 px-4 py-3 rounded-xl transition-colors",
                   isActive
-                    ? "bg-[var(--color-light-mint)] text-[var(--color-soft-teal)] font-medium"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-[var(--color-deep-navy)]"
+                    ? "bg-light-mint text-soft-teal font-medium"
+                    : "text-gray-600 hover:bg-gray-50 hover:text-deep-navy"
                 )
               }
             >

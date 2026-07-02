@@ -26,7 +26,7 @@ const Journey: React.FC = () => {
             transition={{ delay: index * 0.1 }}
             className={cn(
               "card border-l-4",
-              phase.status === 'completed' ? "border-l-[var(--color-soft-teal)] opacity-75" :
+              phase.status === 'completed' ? "border-l-soft-teal opacity-75" :
               phase.status === 'current' ? "border-l-blue-500 shadow-md ring-1 ring-blue-50" :
               "border-l-gray-300 opacity-60"
             )}
@@ -47,9 +47,9 @@ const Journey: React.FC = () => {
                 <div key={task.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors">
                   <div className="flex items-center space-x-3">
                     {task.completed ? (
-                      <CheckCircle2 className="w-5 h-5 text-soft-teal flex-shrink-0" />
+                      <CheckCircle2 className="w-5 h-5 text-soft-teal shrink-0" />
                     ) : (
-                      <Circle className="w-5 h-5 text-gray-300 flex-shrink-0" />
+                      <Circle className="w-5 h-5 text-gray-300 shrink-0" />
                     )}
                     <span className={cn(
                       "font-medium",

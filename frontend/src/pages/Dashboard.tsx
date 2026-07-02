@@ -41,9 +41,9 @@ const Dashboard: React.FC = () => {
             {nextActions.map((action) => (
               <div key={action.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl">
                 {action.completed ? (
-                  <CheckCircle2 className="w-6 h-6 text-soft-teal flex-shrink-0" />
+                  <CheckCircle2 className="w-6 h-6 text-soft-teal shrink-0" />
                 ) : (
-                  <Circle className="w-6 h-6 text-gray-300 flex-shrink-0" />
+                  <Circle className="w-6 h-6 text-gray-300 shrink-0" />
                 )}
                 <span className={action.completed ? "text-gray-500 line-through" : "text-deep-navy font-medium"}>
                   {action.title}
@@ -83,7 +83,7 @@ const Dashboard: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {suggestedConnections.map((person) => (
             <div key={person.id} className="card flex items-center space-x-4">
-              <div className="w-12 h-12 bg-[var(--color-subtle-peach)] rounded-full flex items-center justify-center text-[var(--color-deep-navy)] font-bold text-lg">
+              <div className="w-12 h-12 bg-subtle-peach rounded-full flex items-center justify-center text-deep-navy font-bold text-lg">
                 {person.name.charAt(0)}
               </div>
               <div>

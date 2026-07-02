@@ -21,13 +21,13 @@ const HRView: React.FC = () => {
           <p className="text-3xl font-bold text-deep-navy mt-2">1</p>
         </div>
         <div className="card bg-orange-50 border-orange-100">
-          <p className="text-gray-600 font-medium text-orange-800">Action Required</p>
+          <p className="font-medium text-orange-800">Action Required</p>
           <p className="text-3xl font-bold text-orange-600 mt-2">1</p>
         </div>
       </div>
 
       {/* New Hires List */}
-      <div className="card overflow-hidden !p-0">
+      <div className="card overflow-hidden p-0!">
         <table className="w-full text-left">
           <thead className="bg-gray-50 border-b border-gray-100">
             <tr>

@@ -17,7 +17,7 @@ const OfficeExplorer: React.FC = () => {
 
       <div className="flex-1 flex flex-col md:flex-row gap-8">
         {/* Map Container */}
-        <div className="flex-[2] bg-white rounded-2xl shadow-sm border border-gray-100 p-8 flex items-center justify-center min-h-[400px]">
+        <div className="flex-2 bg-white rounded-2xl shadow-sm border border-gray-100 p-8 flex items-center justify-center min-h-[400px]">
           {/* Conceptual Isometric Map using SVG */}
           <svg viewBox="0 0 800 600" className="w-full h-full drop-shadow-lg">
             <g transform="translate(400, 100) scale(1, 0.5) rotate(45)">

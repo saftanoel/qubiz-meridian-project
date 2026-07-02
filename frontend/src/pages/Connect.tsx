@@ -48,7 +48,7 @@ const Connect: React.FC = () => {
           >
             <div className="flex items-start justify-between">
               <div className="flex items-center space-x-4">
-                <div className="w-16 h-16 bg-[var(--color-subtle-peach)] rounded-full flex items-center justify-center text-[var(--color-deep-navy)] font-bold text-2xl">
+                <div className="w-16 h-16 bg-subtle-peach rounded-full flex items-center justify-center text-deep-navy font-bold text-2xl">
                   {emp.name.charAt(0)}
                 </div>
                 <div>
