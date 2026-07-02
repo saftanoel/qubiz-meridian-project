@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -8,8 +9,13 @@
   --color-light-blue: #e8f0fe;
   --color-subtle-peach: #ffe8d6;
   --color-subtle-yellow: #fff3cd;
+  --color-subtle-red: #fee2e2;
+  --color-teal-soft: #d1f0ed;
+  --color-sky: #dbeafe;
+  --color-butter: #fef9c3;
 
   --font-sans: "Inter", "Outfit", sans-serif;
+  --font-display: "Outfit", "Inter", sans-serif;
 }
 
 @layer base {
@@ -17,6 +23,8 @@
     background-color: var(--color-warm-offwhite);
     color: var(--color-deep-navy);
     font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -30,10 +38,19 @@
   .card-blue {
     @apply bg-light-blue rounded-2xl shadow-sm border border-transparent p-6;
   }
+  .card-peach {
+    @apply bg-subtle-peach rounded-2xl shadow-sm border border-transparent p-6;
+  }
+  .card-warning {
+    @apply bg-subtle-red rounded-2xl shadow-sm border border-red-100 p-6;
+  }
   .btn-primary {
-    @apply bg-soft-teal text-white rounded-xl px-4 py-2 font-medium hover:opacity-90 transition-opacity;
+    @apply bg-soft-teal text-white rounded-xl px-4 py-2.5 font-medium hover:opacity-90 transition-all cursor-pointer;
   }
   .btn-secondary {
-    @apply bg-white border border-gray-200 text-deep-navy rounded-xl px-4 py-2 font-medium hover:bg-gray-50 transition-colors;
+    @apply bg-white border border-gray-200 text-deep-navy rounded-xl px-4 py-2.5 font-medium hover:bg-gray-50 transition-colors cursor-pointer;
+  }
+  .font-display {
+    font-family: var(--font-display);
   }
 }
