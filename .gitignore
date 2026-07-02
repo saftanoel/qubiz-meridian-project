@@ -44,3 +44,10 @@ coverage.xml
 *.log
 .pytest_cache/
 *.db
+
+# Temporary Markdown files
+ASSUMPTIONS.md
+DECISIONS.md
+REFLECTION.md
+WHAT_I_WOULD_DO_NEXT.md
+frontend/README.md

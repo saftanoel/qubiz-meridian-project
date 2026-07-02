@@ -2,8 +2,8 @@
 // Employee profile (the logged-in new hire)
 // ──────────────────────────────────────────────
 export const employeeData = {
-  name: "Alex",
-  fullName: "Alex Doe",
+  name: "George",
+  fullName: "Safta George-Manuel",
   startDate: "2026-07-04",
   role: "Software Engineer",
   department: "Engineering",

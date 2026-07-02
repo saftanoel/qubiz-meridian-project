@@ -75,13 +75,13 @@ const Connect = () => {
 
         <div className="flex flex-wrap gap-2">
           {/* Departments */}
-          <div className="flex gap-1.5 flex-wrap">
+          <div className="flex gap-1 flex-wrap">
             {departments.map((dept) => (
               <button
                 key={dept}
                 onClick={() => setDeptFilter(dept)}
-                className={`text-xs px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  deptFilter === dept ? 'bg-deep-navy text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-soft-teal/40'
+                className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
+                  deptFilter === dept ? 'bg-deep-navy text-white shadow-sm' : 'bg-white text-slate-500 border border-slate-200 hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
                 {dept}
@@ -90,13 +90,13 @@ const Connect = () => {
           </div>
 
           {/* Day filter */}
-          <div className="flex gap-1.5 flex-wrap">
+          <div className="flex gap-1 flex-wrap">
             {days.map((day) => (
               <button
                 key={day}
                 onClick={() => setDayFilter(dayFilter === day ? null : day)}
-                className={`text-xs px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  dayFilter === day ? 'bg-soft-teal text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-soft-teal/40'
+                className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
+                  dayFilter === day ? 'bg-soft-teal text-white shadow-sm' : 'bg-white text-slate-500 border border-slate-200 hover:border-slate-300 hover:bg-slate-50'
                 }`}
               >
                 {day}
@@ -105,13 +105,13 @@ const Connect = () => {
           </div>
 
           {/* Interest chips */}
-          <div className="flex gap-1.5 flex-wrap">
+          <div className="flex gap-1 flex-wrap">
             {allInterests.map((interest) => (
               <button
                 key={interest}
                 onClick={() => setInterestFilter(interestFilter === interest ? null : interest)}
-                className={`text-xs px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  interestFilter === interest ? 'bg-amber-500 text-white' : 'bg-amber-50 text-amber-700 hover:bg-amber-100'
+                className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
+                  interestFilter === interest ? 'bg-amber-500 text-white shadow-sm' : 'bg-amber-50/50 text-amber-700 hover:bg-amber-100 border border-amber-100/50'
                 }`}
               >
                 {interest}
@@ -122,9 +122,9 @@ const Connect = () => {
           {hasFilters && (
             <button
               onClick={() => { setDeptFilter('All'); setDayFilter(null); setInterestFilter(null); }}
-              className="text-xs text-gray-400 hover:text-gray-600 flex items-center gap-1 cursor-pointer"
+              className="text-[12px] text-slate-400 hover:text-slate-600 flex items-center gap-1 cursor-pointer ml-1"
             >
-              <X className="w-3 h-3" /> Clear filters
+              <X className="w-3.5 h-3.5" /> Clear filters
             </button>
           )}
         </div>
@@ -135,63 +135,63 @@ const Connect = () => {
         {filtered.map((person, i) => (
           <motion.div
             key={person.id}
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.06 }}
-            className="card hover:shadow-md hover:border-soft-teal/20 transition-all duration-200"
+            className="card-compact hover:shadow-md transition-all duration-200"
           >
             <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-xl bg-subtle-peach grid place-items-center font-bold text-deep-navy text-xl shrink-0">
+              <div className="w-12 h-12 rounded-[12px] bg-subtle-peach grid place-items-center font-bold text-deep-navy text-lg shrink-0 shadow-sm border border-white/50">
                 {person.name.charAt(0)}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-display font-semibold text-deep-navy">{person.name}</h3>
-                    <p className="text-xs text-gray-500">{person.role} · {person.department}</p>
+                    <h3 className="font-display font-bold text-[15px] text-deep-navy tracking-tight">{person.name}</h3>
+                    <p className="text-[12px] font-medium text-slate-500 uppercase tracking-wide mt-0.5">{person.role} · {person.department}</p>
                   </div>
                   {person.isBuddy && (
-                    <span className="text-[10px] font-medium bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full">Your Buddy</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full border border-teal-100/50">Buddy</span>
                   )}
                 </div>
 
-                <div className="mt-3 space-y-2">
-                  <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                    <Calendar className="w-3.5 h-3.5 text-gray-400" />
-                    Office: {person.officeDays.join(', ')}
+                <div className="mt-3.5 space-y-2">
+                  <div className="flex items-center gap-1.5 text-[12px] text-slate-500">
+                    <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                    Office: <span className="font-medium text-deep-navy/80">{person.officeDays.join(', ')}</span>
                   </div>
-                  <div className="flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1.5">
                     {person.interests.map((interest) => (
-                      <span key={interest} className="text-[10px] bg-gray-50 text-gray-500 px-2 py-0.5 rounded-full">
+                      <span key={interest} className="text-[10px] bg-slate-50 border border-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-medium">
                         {interest}
                       </span>
                     ))}
                   </div>
-                  <div className="text-xs text-gray-500">
-                    <span className="font-medium text-gray-600">Ask me about:</span> {person.askMeAbout}
+                  <div className="text-[12px] text-slate-500 mt-2">
+                    <span className="font-semibold text-deep-navy/80">Ask me about:</span> {person.askMeAbout}
                   </div>
                 </div>
 
                 {/* Match Reason */}
-                <div className="mt-3 bg-teal-50/60 rounded-lg px-3 py-2">
-                  <p className="text-xs text-teal-700 flex items-center gap-1.5">
-                    <Sparkles className="w-3 h-3 text-teal-500" />
+                <div className="mt-3.5 bg-teal-50/50 rounded-xl p-3 border border-teal-100/50">
+                  <p className="text-[12px] text-teal-800 flex items-start gap-1.5 leading-relaxed font-medium">
+                    <Sparkles className="w-3.5 h-3.5 text-teal-500 shrink-0 mt-0.5" />
                     {person.matchReason}
                   </p>
                 </div>
 
                 {/* Actions */}
-                <div className="flex gap-2 mt-3">
+                <div className="flex gap-2.5 mt-4">
                   <button
                     onClick={() => showToast(`Message sent to ${person.name}!`)}
-                    className="flex-1 text-xs font-medium bg-deep-navy text-white py-2 px-3 rounded-lg hover:opacity-90 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="flex-1 text-[12px] font-semibold bg-deep-navy text-white py-2 px-3 rounded-xl hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                     Start conversation
                   </button>
                   <button
                     onClick={() => showToast(`Coffee chat scheduled with ${person.name}!`)}
-                    className="text-xs font-medium bg-amber-50 text-amber-700 py-2 px-3 rounded-lg hover:bg-amber-100 transition-colors flex items-center gap-1.5 cursor-pointer"
+                    className="text-[12px] font-semibold bg-subtle-peach/50 text-amber-800 border border-amber-100/50 py-2 px-3.5 rounded-xl hover:bg-subtle-peach transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
                   >
                     <Coffee className="w-3.5 h-3.5" />
                     Coffee chat

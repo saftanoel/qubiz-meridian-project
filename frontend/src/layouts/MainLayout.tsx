@@ -30,21 +30,21 @@ const MainLayout = () => {
   const visibleNavItems = navItems.filter((item) => item.roles.includes(role));
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row font-sans">
       {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-deep-navy flex flex-col shrink-0">
+      <aside className="w-full md:w-64 bg-deep-navy flex flex-col shrink-0 border-r border-slate-800">
         {/* Logo */}
-        <div className="p-6 pb-2">
+        <div className="p-5 pb-2">
           <h1 className="text-xl font-display font-bold text-white flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-soft-teal grid place-items-center">
-              <Compass className="w-4.5 h-4.5 text-white" />
+            <div className="w-7 h-7 rounded-lg bg-soft-teal grid place-items-center">
+              <Compass className="w-4 h-4 text-white" />
             </div>
             Meridian
           </h1>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-4 space-y-1">
+        <nav className="flex-1 px-3 py-6 space-y-1">
           {visibleNavItems.map((item) => (
             <NavLink
               key={item.path}
@@ -52,26 +52,26 @@ const MainLayout = () => {
               end={item.path === '/'}
               className={({ isActive }) =>
                 cn(
-                  'flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all',
+                  'flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-all',
                   isActive
                     ? 'bg-white/10 text-white'
                     : 'text-white/60 hover:bg-white/5 hover:text-white/90'
                 )
               }
             >
-              <item.icon className="w-[18px] h-[18px]" />
+              <item.icon className="w-[16px] h-[16px]" />
               <span>{item.name}</span>
             </NavLink>
           ))}
         </nav>
 
         {/* Role Switcher */}
-        <div className="p-4 border-t border-white/10">
+        <div className="p-4">
           <button
             onClick={handleRoleToggle}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/70 bg-white/5 hover:bg-white/10 hover:text-white transition-all cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-white/50 bg-white/5 hover:bg-white/10 hover:text-white/90 transition-all cursor-pointer border border-white/5"
           >
-            <ArrowLeftRight className="w-4 h-4" />
+            <ArrowLeftRight className="w-3.5 h-3.5" />
             <span>View as {role === 'employee' ? 'HR' : 'Employee'}</span>
           </button>
         </div>
@@ -79,7 +79,7 @@ const MainLayout = () => {
 
       {/* Main Content */}
       <main className="flex-1 bg-warm-offwhite overflow-y-auto min-h-screen">
-        <div className="p-6 md:px-10 md:py-8 max-w-7xl mx-auto">
+        <div className="p-6 md:px-12 md:py-10 max-w-7xl mx-auto">
           <Outlet />
         </div>
       </main>

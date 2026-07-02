@@ -2,20 +2,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-warm-offwhite: #fcfbf9;
-  --color-deep-navy: #1a2b4c;
-  --color-soft-teal: #4b9e9e;
-  --color-light-mint: #e2f3f1;
-  --color-light-blue: #e8f0fe;
-  --color-subtle-peach: #ffe8d6;
-  --color-subtle-yellow: #fff3cd;
-  --color-subtle-red: #fee2e2;
-  --color-teal-soft: #d1f0ed;
-  --color-sky: #dbeafe;
+  --color-warm-offwhite: #fcfaf8;
+  --color-deep-navy: #0f172a;
+  --color-soft-teal: #3b8c8c;
+  --color-light-mint: #eef8f7;
+  --color-light-blue: #f1f5f9;
+  --color-subtle-peach: #ffebd6;
+  --color-subtle-yellow: #fefce8;
+  --color-subtle-red: #fef2f2;
+  --color-teal-soft: #d5f2f0;
+  --color-sky: #e0f2fe;
   --color-butter: #fef9c3;
 
-  --font-sans: "Inter", "Outfit", sans-serif;
-  --font-display: "Outfit", "Inter", sans-serif;
+  --font-sans: "Inter", "Outfit", system-ui, sans-serif;
+  --font-display: "Outfit", "Inter", system-ui, sans-serif;
+  --font-serif: "Georgia", "Times New Roman", serif;
+  
+  --shadow-soft: 0 4px 20px -2px rgba(15, 23, 42, 0.03), 0 0 3px rgba(15, 23, 42, 0.02);
 }
 
 @layer base {
@@ -30,27 +33,33 @@
 
 @layer utilities {
   .card {
-    @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-6;
+    @apply bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-slate-100 p-6;
+  }
+  .card-compact {
+    @apply bg-white rounded-xl shadow-[var(--shadow-soft)] border border-slate-100 p-4;
   }
   .card-mint {
-    @apply bg-light-mint rounded-2xl shadow-sm border border-transparent p-6;
+    @apply bg-light-mint rounded-2xl shadow-[var(--shadow-soft)] border border-transparent p-6;
   }
   .card-blue {
-    @apply bg-light-blue rounded-2xl shadow-sm border border-transparent p-6;
+    @apply bg-light-blue rounded-2xl shadow-[var(--shadow-soft)] border border-transparent p-6;
   }
   .card-peach {
-    @apply bg-subtle-peach rounded-2xl shadow-sm border border-transparent p-6;
+    @apply bg-subtle-peach rounded-2xl shadow-[var(--shadow-soft)] border border-transparent p-6;
   }
   .card-warning {
-    @apply bg-subtle-red rounded-2xl shadow-sm border border-red-100 p-6;
+    @apply bg-subtle-red rounded-2xl shadow-[var(--shadow-soft)] border border-red-50 p-6;
   }
   .btn-primary {
-    @apply bg-soft-teal text-white rounded-xl px-4 py-2.5 font-medium hover:opacity-90 transition-all cursor-pointer;
+    @apply bg-deep-navy text-white rounded-xl px-4 py-2.5 font-medium hover:bg-slate-800 transition-all cursor-pointer shadow-sm;
   }
   .btn-secondary {
-    @apply bg-white border border-gray-200 text-deep-navy rounded-xl px-4 py-2.5 font-medium hover:bg-gray-50 transition-colors cursor-pointer;
+    @apply bg-white border border-slate-200 text-deep-navy rounded-xl px-4 py-2.5 font-medium hover:bg-slate-50 transition-colors cursor-pointer shadow-sm;
   }
   .font-display {
     font-family: var(--font-display);
+  }
+  .font-serif-elegant {
+    font-family: var(--font-serif);
   }
 }
