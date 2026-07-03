@@ -5,15 +5,15 @@ import { CheckCircle2, Circle, Clock, ChevronDown, ChevronUp, User, Timer } from
 import { journeyPhases as initialPhases, type JourneyPhase, type TaskStatus } from '../lib/mockData';
 
 const statusConfig: Record<TaskStatus, { label: string; color: string; icon: React.ElementType }> = {
-  done: { label: 'Done', color: 'text-emerald-600 bg-emerald-50', icon: CheckCircle2 },
-  in_progress: { label: 'In progress', color: 'text-amber-600 bg-amber-50', icon: Clock },
-  not_started: { label: 'Not started', color: 'text-gray-400 bg-gray-50', icon: Circle },
+  done: { label: 'Done', color: 'text-emerald-700 bg-emerald-100', icon: CheckCircle2 },
+  in_progress: { label: 'In progress', color: 'text-amber-700 bg-amber-100', icon: Clock },
+  not_started: { label: 'Not started', color: 'text-slate-600 bg-slate-200/80', icon: Circle },
 };
 
 const priorityColors: Record<string, string> = {
-  High: 'bg-rose-50 text-rose-600',
-  Medium: 'bg-amber-50 text-amber-600',
-  Low: 'bg-blue-50 text-blue-600',
+  High: 'bg-rose-100 text-rose-700',
+  Medium: 'bg-amber-100 text-amber-700',
+  Low: 'bg-sky-100 text-sky-700',
 };
 
 const Journey = () => {
@@ -68,7 +68,7 @@ const Journey = () => {
             {doneCount} of {totalCount} tasks
           </p>
         </div>
-        <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+        <div className="w-full h-3 bg-[#e6d8c3]/40 rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-gradient-to-r from-soft-teal to-emerald-500 rounded-full"
             initial={{ width: 0 }}
@@ -112,10 +112,10 @@ const Journey = () => {
               {/* Phase Header */}
               <button
                 onClick={() => toggleExpand(phase.id)}
-                className="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50/50 transition-colors cursor-pointer"
+                className="w-full px-5 py-4 flex items-center justify-between hover:bg-[#fffaf0] transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-slate-100/70 text-slate-500">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#fff8ea] border border-[#e6d8c3] text-slate-600">
                     {PhaseIcon && <PhaseIcon className="w-5 h-5" />}
                   </div>
                   <div className="text-left">
@@ -126,7 +126,7 @@ const Journey = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden hidden sm:block">
+                  <div className="w-24 h-1.5 bg-[#e6d8c3]/40 rounded-full overflow-hidden hidden sm:block">
                     <div className="h-full bg-soft-teal rounded-full transition-all duration-500" style={{ width: `${phasePct}%` }} />
                   </div>
                   {isOpen ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
@@ -151,8 +151,8 @@ const Journey = () => {
                             key={task.id}
                             className={`rounded-xl border px-4 py-3.5 flex items-start gap-3 transition-all duration-200 ${
                               task.status === 'done'
-                                ? 'bg-emerald-50/40 border-emerald-100'
-                                : 'bg-white border-gray-100 hover:border-soft-teal/30'
+                                ? 'bg-emerald-50 border-emerald-200'
+                                : 'bg-[#fffaf0] border-[#e6d8c3] hover:border-[#d8c4a8]'
                             }`}
                           >
                             <button onClick={() => cycleStatus(phase.id, task.id)} className="mt-0.5 shrink-0 cursor-pointer">

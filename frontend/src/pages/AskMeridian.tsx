@@ -72,7 +72,7 @@ const AskMeridian = () => {
             className={`text-xs px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
               activeCategory === cat
                 ? 'bg-deep-navy text-white'
-                : 'bg-white text-gray-500 border border-gray-200 hover:border-soft-teal/40'
+                : 'bg-[#fffaf0] text-slate-500 border border-[#e6d8c3] hover:border-[#d8c4a8]'
             }`}
           >
             {cat}

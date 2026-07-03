@@ -32,7 +32,7 @@ const MainLayout = () => {
   return (
     <div className="h-[100dvh] flex flex-col md:flex-row font-sans overflow-hidden bg-warm-offwhite">
       {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-warm-offwhite flex flex-col shrink-0 border-r border-[#eee7dc] md:h-full z-10">
+      <aside className="w-full md:w-64 bg-warm-offwhite flex flex-col shrink-0 border-r border-[#e6d8c3] md:h-full z-10">
         {/* Logo */}
         <div className="p-5 pb-2">
           <Link to="/" className="inline-block cursor-pointer">
@@ -60,7 +60,7 @@ const MainLayout = () => {
                   'flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all',
                   isActive
                     ? 'bg-deep-navy text-white shadow-sm'
-                    : 'text-slate-500 hover:bg-[#f3eee5] hover:text-deep-navy'
+                    : 'text-slate-500 hover:bg-[#ebe1d1] hover:text-deep-navy'
                 )
               }
             >
@@ -72,7 +72,7 @@ const MainLayout = () => {
 
         {/* Role Switcher */}
         <div className="p-4 pb-6 mt-auto">
-          <div className="bg-[#f8f5ee] rounded-[20px] p-3 shadow-sm border border-[#eee7dc] relative overflow-hidden">
+          <div className="bg-[#fff8ea] rounded-[20px] p-3 shadow-sm border border-[#e6d8c3] relative overflow-hidden">
             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2.5 px-1">Viewing as</div>
             <div className="flex bg-[#f3eee5] p-1 rounded-[16px] border border-[#eee7dc]/50">
               <button

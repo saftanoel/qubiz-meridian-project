@@ -112,7 +112,7 @@ const Connect = () => {
                 key={dept}
                 onClick={() => setDeptFilter(dept)}
                 className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  deptFilter === dept ? 'bg-deep-navy text-white shadow-sm' : 'bg-white text-slate-500 border border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                  deptFilter === dept ? 'bg-deep-navy text-white shadow-sm' : 'bg-[#fffaf0] text-slate-500 border border-[#e6d8c3] hover:border-[#d8c4a8] hover:bg-[#fff9ed]'
                 }`}
               >
                 {dept}
@@ -127,7 +127,7 @@ const Connect = () => {
                 key={day}
                 onClick={() => setDayFilter(dayFilter === day ? null : day)}
                 className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  dayFilter === day ? 'bg-soft-teal text-white shadow-sm' : 'bg-white text-slate-500 border border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                  dayFilter === day ? 'bg-soft-teal text-white shadow-sm' : 'bg-[#fffaf0] text-slate-500 border border-[#e6d8c3] hover:border-[#d8c4a8] hover:bg-[#fff9ed]'
                 }`}
               >
                 {day}
@@ -142,7 +142,7 @@ const Connect = () => {
                 key={interest}
                 onClick={() => setInterestFilter(interestFilter === interest ? null : interest)}
                 className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  interestFilter === interest ? 'bg-amber-500 text-white shadow-sm' : 'bg-amber-50/50 text-amber-700 hover:bg-amber-100 border border-amber-100/50'
+                  interestFilter === interest ? 'bg-amber-500 text-white shadow-sm' : 'bg-[#fffaf0] text-amber-700 border border-[#e6d8c3] hover:bg-[#fff4e0] hover:border-[#d8c4a8]'
                 }`}
               >
                 {interest}
@@ -169,12 +169,12 @@ const Connect = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.06 }}
-            className="bg-[#fffdf9] border border-[#ebe1d1] rounded-[28px] p-6 hover:shadow-[0_10px_40px_rgb(0,0,0,0.05)] hover:-translate-y-1 transition-all flex flex-col h-full"
+            className="bg-[#fff8ea] border border-[#e6d8c3] rounded-[28px] p-6 hover:border-[#d8c4a8] hover:shadow-[0_10px_40px_rgba(55,40,20,0.08)] hover:-translate-y-1 transition-all flex flex-col h-full"
           >
             {/* Top row */}
             <div className="flex items-start gap-4">
               <div className="relative shrink-0">
-                <div className="w-[72px] h-[72px] rounded-2xl bg-[#faf6f0] grid place-items-center font-bold text-deep-navy text-xl shadow-sm border border-[#ebe1d1]/50 absolute inset-0">
+                <div className="w-[72px] h-[72px] rounded-2xl bg-[#fffaf0] grid place-items-center font-bold text-deep-navy text-xl shadow-sm border border-[#e6d8c3] absolute inset-0">
                   {person.name.charAt(0)}
                 </div>
                 {person.avatarUrl && (
@@ -206,9 +206,9 @@ const Connect = () => {
                     const isActive = person.officeDays.includes(dayStr);
                     return (
                       <div key={dayStr} className={`flex-1 text-center py-1.5 rounded-full text-[11px] transition-colors ${
-                        isActive 
-                          ? 'bg-teal-soft text-deep-navy font-bold shadow-sm' 
-                          : 'bg-[#faf6f0] text-slate-400 font-medium border border-transparent'
+                        isActive
+                          ? 'bg-soft-teal/20 text-teal-800 font-bold border border-soft-teal/30'
+                          : 'bg-[#fffaf0] border border-[#e6d8c3] text-slate-500 font-medium'
                       }`}>
                         {short}
                       </div>
@@ -222,7 +222,7 @@ const Connect = () => {
                 <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-2">Interests</p>
                 <div className="flex flex-wrap gap-2">
                   {person.interests.map((interest) => (
-                    <span key={interest} className="text-[11.5px] bg-[#fdfaf1] border border-[#ebe1d1] text-slate-500 px-3 py-1 rounded-full font-medium">
+                    <span key={interest} className="text-[11.5px] bg-[#fffaf0] border border-[#d8c4a8] text-deep-navy/80 px-3 py-1 rounded-full font-medium">
                       {interest}
                     </span>
                   ))}

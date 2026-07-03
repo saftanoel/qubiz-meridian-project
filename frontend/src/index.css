@@ -5,13 +5,13 @@
   --color-warm-offwhite: #fdfaf1;
   --color-deep-navy: #0f172a;
   --color-soft-teal: #3b8c8c;
-  --color-light-mint: #eef8f7;
-  --color-light-blue: #f1f5f9;
-  --color-subtle-peach: #ffebd6;
+  --color-light-mint: #e0f4f1;
+  --color-light-blue: #e2e8f0;
+  --color-subtle-peach: #ffe0c2;
   --color-subtle-yellow: #fefce8;
   --color-subtle-red: #fef2f2;
-  --color-teal-soft: #d5f2f0;
-  --color-sky: #e0f2fe;
+  --color-teal-soft: #bcebe7;
+  --color-sky: #bae6fd;
   --color-butter: #fef9c3;
 
   --font-sans: "Inter", system-ui, sans-serif;
@@ -43,28 +43,28 @@
 
 @layer utilities {
   .card {
-    @apply bg-[#fffdf9] rounded-[28px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#ebe1d1] p-8;
+    @apply bg-[#fff8ea] rounded-[28px] shadow-[0_10px_30px_rgba(55,40,20,0.07)] border border-[#e6d8c3] p-8;
   }
   .card-compact {
-    @apply bg-[#fffdf9] rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-[#ebe1d1] p-5;
+    @apply bg-[#fff8ea] rounded-2xl shadow-[0_6px_25px_rgba(55,40,20,0.06)] border border-[#e6d8c3] p-5;
   }
   .card-mint {
-    @apply bg-light-mint rounded-[28px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-transparent p-8;
+    @apply bg-light-mint rounded-[28px] shadow-[0_10px_30px_rgba(55,40,20,0.07)] border border-transparent p-8;
   }
   .card-blue {
-    @apply bg-light-blue rounded-[28px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-transparent p-8;
+    @apply bg-light-blue rounded-[28px] shadow-[0_10px_30px_rgba(55,40,20,0.07)] border border-transparent p-8;
   }
   .card-peach {
-    @apply bg-subtle-peach rounded-[28px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-transparent p-8;
+    @apply bg-subtle-peach rounded-[28px] shadow-[0_10px_30px_rgba(55,40,20,0.07)] border border-transparent p-8;
   }
   .card-warning {
-    @apply bg-subtle-red rounded-[28px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-red-50 p-8;
+    @apply bg-subtle-red rounded-[28px] shadow-[0_10px_30px_rgba(55,40,20,0.07)] border border-red-100 p-8;
   }
   .btn-primary {
     @apply bg-deep-navy text-white rounded-full px-5 py-2.5 font-medium hover:bg-slate-800 transition-all cursor-pointer shadow-sm;
   }
   .btn-secondary {
-    @apply bg-[#fffdf9] text-deep-navy border border-[#ebe1d1] rounded-full px-5 py-2.5 font-medium hover:bg-[#faf6f0] hover:shadow-sm transition-all cursor-pointer shadow-[0_2px_10px_rgb(0,0,0,0.02)];
+    @apply bg-[#fff8ea] text-deep-navy border border-[#e6d8c3] rounded-full px-5 py-2.5 font-medium hover:bg-[#f5eade] hover:border-[#d8c4a8] hover:shadow-sm transition-all cursor-pointer shadow-[0_2px_10px_rgba(55,40,20,0.04)];
   }
   .font-display {
     font-family: var(--font-display);

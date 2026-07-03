@@ -68,7 +68,7 @@ const Dashboard = () => {
             {nextActions.map((a) => {
               const bg = a.tone === 'peach' ? 'bg-subtle-peach' : a.tone === 'teal' ? 'bg-teal-soft' : 'bg-sky';
               return (
-                <li key={a.id} className="group flex items-center gap-5 rounded-2xl border border-[#ebe1d1]/60 bg-[#fdfaf1]/50 p-4 hover:bg-white hover:shadow-[0_4px_20px_rgb(0,0,0,0.03)] transition-all cursor-pointer">
+                <li key={a.id} className="group flex items-center gap-5 rounded-2xl border border-[#e6d8c3] bg-[#fffaf0] p-4 hover:bg-[#fff9ed] hover:border-[#d8c4a8] hover:shadow-[0_4px_20px_rgba(55,40,20,0.05)] transition-all cursor-pointer">
                   <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${bg}`}>
                     <CircleCheck className="h-5 w-5 text-deep-navy/60" />
                   </div>
@@ -138,7 +138,7 @@ const Dashboard = () => {
           </div>
           <div className="grid sm:grid-cols-3 gap-4">
             {suggestedConnections.map((p) => (
-              <div key={p.id} className="bg-[#fefdf9] border border-[#ebe1d1] rounded-3xl p-5 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all cursor-pointer flex flex-col h-full group">
+              <div key={p.id} className="bg-[#fffaf0] border border-[#e6d8c3] rounded-3xl p-5 hover:border-[#d8c4a8] hover:shadow-[0_8px_30px_rgba(55,40,20,0.06)] transition-all cursor-pointer flex flex-col h-full group">
                 <div className="flex items-center gap-3">
                   <div className="grid h-11 w-11 place-items-center rounded-2xl font-semibold text-deep-navy text-[15px] shadow-sm" style={{ background: p.color }}>
                     {p.initials}
@@ -149,7 +149,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <p className="mt-4 text-[13px] text-slate-600 leading-relaxed line-clamp-2 flex-1">{p.reason}</p>
-                <button className="mt-4 w-full bg-[#fdfaf1] border border-[#ebe1d1]/80 text-deep-navy hover:bg-[#faf6f0] text-[12.5px] font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors">
+                <button className="mt-4 w-full bg-[#fffaf0] border border-[#e6d8c3] text-deep-navy hover:bg-[#fff4e0] hover:border-[#d8c4a8] text-[12.5px] font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all">
                   <UsersRound className="h-3.5 w-3.5 text-soft-teal" /> Coffee chat
                 </button>
               </div>
@@ -171,7 +171,7 @@ const Dashboard = () => {
             {upcomingOfficeDays.map((d) => {
               const bg = d.tone === 'peach' ? 'bg-subtle-peach' : d.tone === 'teal' ? 'bg-teal-soft' : 'bg-sky';
               return (
-                <li key={d.date} className="flex items-center gap-4 rounded-2xl p-3 hover:bg-[#faf6f0]/50 transition cursor-pointer border border-transparent hover:border-[#ebe1d1]">
+                <li key={d.date} className="flex items-center gap-4 rounded-2xl p-3 hover:bg-[#fffaf0] transition cursor-pointer border border-transparent hover:border-[#e6d8c3]">
                   <div className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl text-deep-navy shadow-[0_2px_10px_rgb(0,0,0,0.02)] ${bg}`}>
                     <div className="text-center leading-none">
                       <div className="text-[9.5px] uppercase font-bold tracking-wider opacity-60 mb-1">{d.day}</div>
@@ -234,7 +234,7 @@ function Stat({ dot, label, value }: { dot: string; label: string; value: number
 
 function QuickCard({ to, title, desc, icon: Icon, bg }: { to: string; title: string; desc: string; icon: React.ElementType; bg: string }) {
   return (
-    <Link to={to} className="group bg-[#fffdf9] border border-[#ebe1d1] rounded-3xl p-5 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-0.5 transition-all flex flex-col h-[130px]">
+    <Link to={to} className="group bg-[#fffaf0] border border-[#e6d8c3] rounded-3xl p-5 hover:border-[#d8c4a8] hover:shadow-[0_8px_30px_rgba(55,40,20,0.06)] hover:-translate-y-0.5 transition-all flex flex-col h-[130px]">
       <div className={`grid h-10 w-10 place-items-center rounded-2xl ${bg}`}>
         <Icon className="h-4 w-4 text-deep-navy" />
       </div>
