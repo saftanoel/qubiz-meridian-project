@@ -22,9 +22,9 @@ export const nextActions = [
 // Dashboard – suggested connections (summary)
 // ──────────────────────────────────────────────
 export const suggestedConnections = [
-  { id: 1, name: "Sarah Chen", role: "Engineering Manager", reason: "Your direct manager — she'll guide your first sprint.", initials: "SC", color: "var(--color-teal-soft)" },
-  { id: 2, name: "Mike Ross", role: "Product Designer", reason: "Works on the same product pod. Loves design system chats.", initials: "MR", color: "var(--color-subtle-peach)" },
-  { id: 3, name: "Emily Wong", role: "HR Partner", reason: "Your onboarding buddy — your go-to for any question.", initials: "EW", color: "var(--color-sky)" },
+  { id: 1, name: "Mara Ionescu", role: "Frontend Developer", department: "Engineering", reason: "You both like React and music.", initials: "MI", color: "var(--color-subtle-peach)" },
+  { id: 2, name: "Andrei Pop", role: "Backend Developer", department: "Engineering", reason: "You'll both work in Engineering workflows.", initials: "AP", color: "var(--color-teal-soft)" },
+  { id: 3, name: "Ioana Radu", role: "HR Specialist", department: "HR", reason: "She can help with first-month questions.", initials: "IR", color: "var(--color-light-mint)" },
 ];
 
 // ──────────────────────────────────────────────
@@ -109,7 +109,7 @@ export const journeyPhases: JourneyPhase[] = [
 export const allEmployees = [
   {
     id: 1,
-    name: "Sarah Chen",
+    name: "Mara Ionescu",
     role: "Engineering Manager",
     department: "Engineering",
     interests: ["Hiking", "Coffee", "React"],
@@ -117,10 +117,11 @@ export const allEmployees = [
     askMeAbout: "System architecture, local coffee spots",
     matchReason: "Your direct manager — she'll guide your first sprint and help you ramp up.",
     isBuddy: false,
+    avatarUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200&auto=format&fit=crop",
   },
   {
     id: 2,
-    name: "Mike Ross",
+    name: "Andrei Pop",
     role: "Product Designer",
     department: "Design",
     interests: ["Photography", "Figma", "Dogs"],
@@ -128,10 +129,11 @@ export const allEmployees = [
     askMeAbout: "Design system, dog-friendly parks nearby",
     matchReason: "Works on the same product pod — great for cross-functional questions.",
     isBuddy: false,
+    avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
   },
   {
     id: 3,
-    name: "Emily Wong",
+    name: "Ioana Radu",
     role: "HR Partner",
     department: "Human Resources",
     interests: ["Reading", "Baking", "Yoga"],
@@ -139,10 +141,11 @@ export const allEmployees = [
     askMeAbout: "Benefits, onboarding process, best bakeries in town",
     matchReason: "Your onboarding buddy — your go-to person for literally any question.",
     isBuddy: true,
+    avatarUrl: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop",
   },
   {
     id: 4,
-    name: "David Kim",
+    name: "Vlad Marinescu",
     role: "Frontend Engineer",
     department: "Engineering",
     interests: ["React", "Gaming", "Anime"],
@@ -150,6 +153,7 @@ export const allEmployees = [
     askMeAbout: "Frontend guild, video games, TypeScript patterns",
     matchReason: "Shared interest: React — joined 3 months ago and remembers what it's like.",
     isBuddy: false,
+    avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop",
   },
   {
     id: 5,
@@ -161,10 +165,11 @@ export const allEmployees = [
     askMeAbout: "Company brand, content strategy, running routes",
     matchReason: "Runs the internal newsletter — a great way to learn what's happening.",
     isBuddy: false,
+    avatarUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
   },
   {
     id: 6,
-    name: "Liam O'Brien",
+    name: "Tudor Munteanu",
     role: "Data Analyst",
     department: "Finance",
     interests: ["Python", "Board Games", "Cooking"],
@@ -172,6 +177,7 @@ export const allEmployees = [
     askMeAbout: "Analytics tools, board game nights, lunch spots",
     matchReason: "Organizes the weekly board game social — easiest way to meet people.",
     isBuddy: false,
+    avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
   },
 ];
 
@@ -189,15 +195,15 @@ export const officeAreas = {
   hr: {
     title: "HR & People Desk",
     description: "The People team sits here. Drop by for onboarding paperwork or a chat.",
-    tips: ["Emily Wong sits here — your onboarding buddy.", "Don't hesitate to ask even 'silly' questions."],
-    whoYouMeet: "Emily Wong (HR Partner), the People Ops team",
+    tips: ["Ioana Radu sits here — your onboarding buddy.", "Don't hesitate to ask even 'silly' questions."],
+    whoYouMeet: "Ioana Radu (HR Partner), the People Ops team",
     whyItMatters: "Your home base for all onboarding questions in the first weeks.",
   },
   engineering: {
     title: "Engineering Pods",
     description: "Where the magic happens. Quiet work zones and pairing stations.",
     tips: ["Please keep voices low in the deep work zone.", "Standup happens here at 10 AM."],
-    whoYouMeet: "Sarah Chen (your manager), David Kim, backend & infra engineers",
+    whoYouMeet: "Mara Ionescu (your manager), Vlad Marinescu, backend & infra engineers",
     whyItMatters: "This is where your team sits — you'll spend most of your office days here.",
   },
   kitchen: {
@@ -225,7 +231,7 @@ export const officeAreas = {
     title: "Social Space & Games",
     description: "Ping pong, couches, and relaxation area.",
     tips: ["Ping pong tournament on Fridays.", "Great place for informal 1-on-1s.", "Board game night is every other Wednesday."],
-    whoYouMeet: "Liam O'Brien (board game organizer), cross-team friends",
+    whoYouMeet: "Tudor Munteanu (board game organizer), cross-team friends",
     whyItMatters: "Easiest way to meet people outside your team. Highly recommended in week one.",
   },
 };

@@ -16,28 +16,28 @@ const Dashboard = () => {
       <motion.section
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-[2rem] p-8 md:p-14 shadow-sm border border-slate-100"
+        className="relative overflow-hidden rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100"
         style={{ background: 'linear-gradient(135deg, var(--color-light-mint) 0%, var(--color-teal-soft) 40%, var(--color-subtle-peach) 100%)' }}
       >
         <div className="max-w-2xl relative z-10">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/60 backdrop-blur-sm px-3.5 py-1.5 text-[11px] uppercase tracking-widest font-semibold text-deep-navy mb-6 border border-white/40 shadow-sm">
-            <Sparkles className="h-3.5 w-3.5 text-soft-teal" /> Welcome to Meridian
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/60 backdrop-blur-sm px-3 py-1 text-[11px] uppercase tracking-widest font-semibold text-deep-navy mb-4 border border-white/40 shadow-sm">
+            <Sparkles className="h-3 w-3 text-soft-teal" /> Welcome to Meridian
           </div>
-          <h1 className="font-display font-semibold text-5xl md:text-6xl lg:text-[68px] text-deep-navy tracking-tight leading-[1.05]">
+          <h1 className="font-display font-semibold text-3xl md:text-4xl lg:text-5xl text-deep-navy tracking-tight leading-[1.1]">
             Hi {employeeData.name} — your first day starts in{' '}
             <span className="relative inline-block whitespace-nowrap">
               <span className="relative z-10">3 days</span>
-              <span className="absolute inset-x-0 bottom-2 h-3 rounded-md bg-subtle-peach/80 mix-blend-multiply" />
+              <span className="absolute inset-x-0 bottom-1.5 h-2 rounded-md bg-subtle-peach/80 mix-blend-multiply" />
             </span>.
           </h1>
-          <p className="mt-6 text-[17px] leading-relaxed text-deep-navy/70 max-w-xl font-medium">
+          <p className="mt-4 text-base leading-relaxed text-deep-navy/70 max-w-xl font-medium">
             You don't need to figure everything out alone. Here are the things that matter most right now — everything else can wait.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Link to="/journey" className="btn-primary inline-flex items-center gap-2 px-6 py-3">
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link to="/journey" className="btn-primary inline-flex items-center gap-2 px-5 py-2.5 text-sm">
               Open your Journey <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/ask" className="btn-secondary inline-flex items-center gap-2 px-6 py-3 bg-white/60 backdrop-blur-sm border-white/50">
+            <Link to="/ask" className="btn-secondary inline-flex items-center gap-2 px-5 py-2.5 bg-white/60 backdrop-blur-sm border-white/50 text-sm">
               <MessageCircle className="h-4 w-4 text-slate-500" /> Ask a question
             </Link>
           </div>
