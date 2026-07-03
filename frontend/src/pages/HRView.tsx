@@ -44,7 +44,7 @@ const HRView = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.06 }}
-            className={`bg-[#fffaf0] rounded-xl p-4 border ${stat.accent} shadow-sm`}
+            className={`bg-card-soft rounded-xl p-4 border ${stat.accent} shadow-sm`}
           >
             <div className={`w-9 h-9 rounded-lg ${stat.color} flex items-center justify-center mb-3`}>
               <stat.icon className="w-[18px] h-[18px]" />
@@ -64,7 +64,7 @@ const HRView = () => {
           transition={{ delay: 0.3 }}
           className="lg:col-span-2 card overflow-hidden !p-0"
         >
-          <div className="px-6 py-4 border-b border-[#e6d8c3]">
+          <div className="px-6 py-4 border-b border-border-warm">
             <h2 className="font-display font-semibold text-deep-navy">Active Onboarding</h2>
           </div>
 
@@ -72,7 +72,7 @@ const HRView = () => {
           <div className="hidden sm:block overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-[#fff8ea]">
+                <tr className="bg-card">
                   <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Employee</th>
                   <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Department</th>
                   <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Start Date</th>
@@ -81,11 +81,11 @@ const HRView = () => {
                   <th className="text-left text-xs font-medium text-gray-500 uppercase tracking-wider px-6 py-3">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#e6d8c3]">
+              <tbody className="divide-y divide-border-warm">
                 {newHires.map((hire) => {
                   const status = statusBadge[hire.status];
                   return (
-                    <tr key={hire.id} className="hover:bg-[#fff9ed] transition-colors">
+                    <tr key={hire.id} className="hover:bg-card-soft transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
                           <div className="w-9 h-9 rounded-full bg-subtle-peach grid place-items-center font-semibold text-deep-navy text-sm shrink-0">

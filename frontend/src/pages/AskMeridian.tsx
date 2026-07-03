@@ -45,7 +45,7 @@ const AskMeridian = () => {
           placeholder="Search questions..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full pl-12 pr-4 py-4 rounded-2xl border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-soft-teal/20 focus:border-soft-teal/30 text-base transition-all"
+          className="w-full pl-12 pr-4 py-4 rounded-2xl bg-card border border-border-warm shadow-sm focus:outline-none focus:ring-2 focus:ring-soft-teal/20 focus:border-soft-teal/30 text-base text-text-main transition-all"
         />
       </div>
 
@@ -55,7 +55,7 @@ const AskMeridian = () => {
           <button
             key={q}
             onClick={() => handleSuggestedClick(q)}
-            className="text-xs px-3 py-1.5 rounded-full bg-subtle-peach text-deep-navy font-medium hover:bg-amber-100 transition-colors cursor-pointer"
+            className="text-xs px-3 py-1.5 rounded-full bg-card-soft border border-border-warm text-text-main font-medium hover:bg-card transition-colors cursor-pointer"
           >
             <Sparkles className="w-3 h-3 inline mr-1" />
             {q}
@@ -71,8 +71,8 @@ const AskMeridian = () => {
             onClick={() => setActiveCategory(cat)}
             className={`text-xs px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
               activeCategory === cat
-                ? 'bg-deep-navy text-white'
-                : 'bg-[#fffaf0] text-slate-500 border border-[#e6d8c3] hover:border-[#d8c4a8]'
+                ? 'bg-text-main text-app'
+                : 'bg-card-soft text-text-muted border border-border-warm hover:border-border-hover'
             }`}
           >
             {cat}
@@ -106,10 +106,10 @@ const AskMeridian = () => {
                     exit={{ height: 0, opacity: 0 }}
                     className="overflow-hidden"
                   >
-                    <p className="mt-4 text-sm text-gray-600 pt-4 border-t border-gray-100 leading-relaxed">
+                    <p className="mt-4 text-sm text-text-muted pt-4 border-t border-border-warm leading-relaxed">
                       {faq.answer}
                     </p>
-                    <span className="inline-block mt-3 text-[10px] font-medium bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">
+                    <span className="inline-block mt-3 text-[10px] font-medium bg-card-soft border border-border-warm text-text-muted px-2 py-0.5 rounded-full">
                       {faq.category}
                     </span>
                   </motion.div>

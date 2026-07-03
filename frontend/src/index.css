@@ -2,12 +2,29 @@
 @import "tailwindcss";
 
 @theme {
-  --color-warm-offwhite: #fdfaf1;
-  --color-deep-navy: #0f172a;
-  --color-soft-teal: #3b8c8c;
-  --color-light-mint: #e0f4f1;
+  --color-app: var(--app-bg);
+  --color-sidebar: var(--sidebar-bg);
+  --color-card: var(--card-bg);
+  --color-card-soft: var(--card-bg-soft);
+  --color-border-warm: var(--border-warm);
+  --color-border-hover: var(--border-warm-hover);
+  --color-text-main: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  
+  --color-warm-offwhite: var(--app-bg);
+  --color-deep-navy: var(--text-primary);
+  --color-soft-teal: var(--accent-teal);
+  --color-light-mint: var(--accent-mint);
+  --color-subtle-peach: var(--accent-peach);
+  
+  --color-slate-400: var(--text-muted);
+  --color-slate-500: var(--text-muted);
+  --color-slate-600: var(--text-muted);
+  --color-gray-400: var(--text-muted);
+  --color-gray-500: var(--text-muted);
+  --color-gray-600: var(--text-muted);
+  
   --color-light-blue: #e2e8f0;
-  --color-subtle-peach: #ffe0c2;
   --color-subtle-yellow: #fefce8;
   --color-subtle-red: #fef2f2;
   --color-teal-soft: #bcebe7;
@@ -17,7 +34,7 @@
   --font-sans: "Inter", system-ui, sans-serif;
   --font-display: "Playfair Display", Georgia, serif;
   
-  --shadow-soft: 0 4px 20px -2px rgba(15, 23, 42, 0.03), 0 0 3px rgba(15, 23, 42, 0.02);
+  --shadow-soft: var(--shadow-soft-var);
 }
 
 @layer utilities {
@@ -27,49 +44,77 @@
 }
 
 @layer base {
+  :root {
+    --app-bg: #fdfaf1;
+    --sidebar-bg: #fdfaf1;
+    --card-bg: #fff8ea;
+    --card-bg-soft: #fffaf0;
+    --border-warm: #e6d8c3;
+    --border-warm-hover: #d8c4a8;
+    --text-primary: #0f172a;
+    --text-muted: #64748b;
+    --accent-teal: #2f9b95;
+    --accent-mint: #c9f3ee;
+    --accent-peach: #ffd9bd;
+    --shadow-soft-var: 0 10px 30px rgba(55, 40, 20, 0.07);
+  }
+
+  [data-theme="dark"] {
+    --app-bg: #101820;
+    --sidebar-bg: #121c26;
+    --card-bg: #1c2935;
+    --card-bg-soft: #22313f;
+    --border-warm: #314151;
+    --border-warm-hover: #475569;
+    --text-primary: #f8efe0;
+    --text-muted: #c8bca9;
+    --accent-teal: #5fd6c9;
+    --accent-mint: #244c4a;
+    --accent-peach: #8b5e3c;
+    --shadow-soft-var: 0 12px 34px rgba(0, 0, 0, 0.28);
+  }
+
   body {
-    background-color: var(--color-warm-offwhite);
-    color: var(--color-deep-navy);
+    background-color: var(--app-bg);
+    color: var(--text-primary);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   ::selection {
-    background-color: var(--color-deep-navy);
-    color: var(--color-warm-offwhite);
+    background-color: var(--text-primary);
+    color: var(--app-bg);
   }
 }
 
 @layer utilities {
   .card {
-    @apply bg-[#fff8ea] rounded-[28px] shadow-[0_10px_30px_rgba(55,40,20,0.07)] border border-[#e6d8c3] p-8;
+    @apply bg-card rounded-[28px] shadow-soft border border-border-warm p-8 transition-colors duration-300;
   }
   .card-compact {
-    @apply bg-[#fff8ea] rounded-2xl shadow-[0_6px_25px_rgba(55,40,20,0.06)] border border-[#e6d8c3] p-5;
+    @apply bg-card rounded-2xl shadow-soft border border-border-warm p-5 transition-colors duration-300;
   }
   .card-mint {
-    @apply bg-light-mint rounded-[28px] shadow-[0_10px_30px_rgba(55,40,20,0.07)] border border-transparent p-8;
+    @apply bg-light-mint rounded-[28px] shadow-soft border border-transparent p-8 transition-colors duration-300;
   }
   .card-blue {
-    @apply bg-light-blue rounded-[28px] shadow-[0_10px_30px_rgba(55,40,20,0.07)] border border-transparent p-8;
+    @apply bg-light-blue rounded-[28px] shadow-soft border border-transparent p-8 transition-colors duration-300;
   }
   .card-peach {
-    @apply bg-subtle-peach rounded-[28px] shadow-[0_10px_30px_rgba(55,40,20,0.07)] border border-transparent p-8;
+    @apply bg-subtle-peach rounded-[28px] shadow-soft border border-transparent p-8 transition-colors duration-300;
   }
   .card-warning {
-    @apply bg-subtle-red rounded-[28px] shadow-[0_10px_30px_rgba(55,40,20,0.07)] border border-red-100 p-8;
+    @apply bg-subtle-red rounded-[28px] shadow-soft border border-red-100 p-8 transition-colors duration-300;
   }
   .btn-primary {
-    @apply bg-deep-navy text-white rounded-full px-5 py-2.5 font-medium hover:bg-slate-800 transition-all cursor-pointer shadow-sm;
+    @apply bg-text-main text-app rounded-full px-5 py-2.5 font-medium hover:opacity-90 transition-all cursor-pointer shadow-sm;
   }
   .btn-secondary {
-    @apply bg-[#fff8ea] text-deep-navy border border-[#e6d8c3] rounded-full px-5 py-2.5 font-medium hover:bg-[#f5eade] hover:border-[#d8c4a8] hover:shadow-sm transition-all cursor-pointer shadow-[0_2px_10px_rgba(55,40,20,0.04)];
+    @apply bg-card text-text-main border border-border-warm rounded-full px-5 py-2.5 font-medium hover:bg-card-soft hover:border-border-hover hover:shadow-sm transition-all cursor-pointer shadow-[0_2px_10px_rgba(55,40,20,0.04)];
   }
   .font-display {
     font-family: var(--font-display);
-  }
-  .font-serif-elegant {
-    font-family: var(--font-serif);
   }
 }

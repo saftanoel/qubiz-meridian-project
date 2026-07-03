@@ -68,7 +68,7 @@ const Journey = () => {
             {doneCount} of {totalCount} tasks
           </p>
         </div>
-        <div className="w-full h-3 bg-[#e6d8c3]/40 rounded-full overflow-hidden">
+        <div className="w-full h-3 bg-border-warm/40 rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-gradient-to-r from-soft-teal to-emerald-500 rounded-full"
             initial={{ width: 0 }}
@@ -112,10 +112,10 @@ const Journey = () => {
               {/* Phase Header */}
               <button
                 onClick={() => toggleExpand(phase.id)}
-                className="w-full px-5 py-4 flex items-center justify-between hover:bg-[#fffaf0] transition-colors cursor-pointer"
+                className="w-full px-5 py-4 flex items-center justify-between hover:bg-card-soft transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#fff8ea] border border-[#e6d8c3] text-slate-600">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-card-soft border border-border-warm text-slate-600">
                     {PhaseIcon && <PhaseIcon className="w-5 h-5" />}
                   </div>
                   <div className="text-left">
@@ -126,7 +126,7 @@ const Journey = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-24 h-1.5 bg-[#e6d8c3]/40 rounded-full overflow-hidden hidden sm:block">
+                  <div className="w-24 h-1.5 bg-border-warm/40 rounded-full overflow-hidden hidden sm:block">
                     <div className="h-full bg-soft-teal rounded-full transition-all duration-500" style={{ width: `${phasePct}%` }} />
                   </div>
                   {isOpen ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
@@ -152,7 +152,7 @@ const Journey = () => {
                             className={`rounded-xl border px-4 py-3.5 flex items-start gap-3 transition-all duration-200 ${
                               task.status === 'done'
                                 ? 'bg-emerald-50 border-emerald-200'
-                                : 'bg-[#fffaf0] border-[#e6d8c3] hover:border-[#d8c4a8]'
+                                : 'bg-card-soft border-border-warm hover:border-border-hover'
                             }`}
                           >
                             <button onClick={() => cycleStatus(phase.id, task.id)} className="mt-0.5 shrink-0 cursor-pointer">

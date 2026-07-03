@@ -63,7 +63,7 @@ const Connect = () => {
             return (
               <div key={person.id} className="rounded-[28px] p-5 shadow-sm" style={{ background: bgGradient }}>
                 <div className="flex items-center gap-3.5 mb-3.5">
-                  <div className="w-12 h-12 rounded-full bg-white grid place-items-center font-bold text-deep-navy text-[15px] shrink-0 shadow-sm relative overflow-hidden">
+                  <div className="w-12 h-12 rounded-full bg-card grid place-items-center font-bold text-text-main text-[15px] shrink-0 shadow-sm relative overflow-hidden">
                     {initials}
                     {person.avatarUrl && (
                       <img 
@@ -100,7 +100,7 @@ const Connect = () => {
             placeholder="Search by name or role..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-soft-teal/20 focus:border-soft-teal/30 transition-all"
+            className="w-full pl-10 pr-4 py-2.5 bg-card border border-border-warm rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-soft-teal/20 focus:border-soft-teal/30 transition-all text-text-main"
           />
         </div>
 
@@ -112,7 +112,7 @@ const Connect = () => {
                 key={dept}
                 onClick={() => setDeptFilter(dept)}
                 className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  deptFilter === dept ? 'bg-deep-navy text-white shadow-sm' : 'bg-[#fffaf0] text-slate-500 border border-[#e6d8c3] hover:border-[#d8c4a8] hover:bg-[#fff9ed]'
+                  deptFilter === dept ? 'bg-text-main text-app shadow-sm' : 'bg-card-soft text-text-muted border border-border-warm hover:border-border-hover hover:bg-card'
                 }`}
               >
                 {dept}
@@ -127,7 +127,7 @@ const Connect = () => {
                 key={day}
                 onClick={() => setDayFilter(dayFilter === day ? null : day)}
                 className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  dayFilter === day ? 'bg-soft-teal text-white shadow-sm' : 'bg-[#fffaf0] text-slate-500 border border-[#e6d8c3] hover:border-[#d8c4a8] hover:bg-[#fff9ed]'
+                  dayFilter === day ? 'bg-soft-teal text-white shadow-sm' : 'bg-card-soft text-text-muted border border-border-warm hover:border-border-hover hover:bg-card'
                 }`}
               >
                 {day}
@@ -142,7 +142,7 @@ const Connect = () => {
                 key={interest}
                 onClick={() => setInterestFilter(interestFilter === interest ? null : interest)}
                 className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  interestFilter === interest ? 'bg-amber-500 text-white shadow-sm' : 'bg-[#fffaf0] text-amber-700 border border-[#e6d8c3] hover:bg-[#fff4e0] hover:border-[#d8c4a8]'
+                  interestFilter === interest ? 'bg-amber-500 text-white shadow-sm' : 'bg-card-soft text-amber-700 border border-border-warm hover:bg-card hover:border-border-hover'
                 }`}
               >
                 {interest}
@@ -169,12 +169,12 @@ const Connect = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.06 }}
-            className="bg-[#fff8ea] border border-[#e6d8c3] rounded-[28px] p-6 hover:border-[#d8c4a8] hover:shadow-[0_10px_40px_rgba(55,40,20,0.08)] hover:-translate-y-1 transition-all flex flex-col h-full"
+            className="bg-card border border-border-warm rounded-[28px] p-6 hover:border-border-hover hover:shadow-[0_10px_40px_rgba(55,40,20,0.08)] hover:-translate-y-1 transition-all flex flex-col h-full"
           >
             {/* Top row */}
             <div className="flex items-start gap-4">
               <div className="relative shrink-0">
-                <div className="w-[72px] h-[72px] rounded-2xl bg-[#fffaf0] grid place-items-center font-bold text-deep-navy text-xl shadow-sm border border-[#e6d8c3] absolute inset-0">
+                <div className="w-[72px] h-[72px] rounded-2xl bg-card-soft grid place-items-center font-bold text-text-main text-xl shadow-sm border border-border-warm absolute inset-0">
                   {person.name.charAt(0)}
                 </div>
                 {person.avatarUrl && (
@@ -208,7 +208,7 @@ const Connect = () => {
                       <div key={dayStr} className={`flex-1 text-center py-1.5 rounded-full text-[11px] transition-colors ${
                         isActive
                           ? 'bg-soft-teal/20 text-teal-800 font-bold border border-soft-teal/30'
-                          : 'bg-[#fffaf0] border border-[#e6d8c3] text-slate-500 font-medium'
+                          : 'bg-card-soft border border-border-warm text-text-muted font-medium'
                       }`}>
                         {short}
                       </div>
@@ -222,7 +222,7 @@ const Connect = () => {
                 <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-2">Interests</p>
                 <div className="flex flex-wrap gap-2">
                   {person.interests.map((interest) => (
-                    <span key={interest} className="text-[11.5px] bg-[#fffaf0] border border-[#d8c4a8] text-deep-navy/80 px-3 py-1 rounded-full font-medium">
+                    <span key={interest} className="text-[11.5px] bg-card-soft border border-border-hover text-text-main/80 px-3 py-1 rounded-full font-medium">
                       {interest}
                     </span>
                   ))}
@@ -257,7 +257,7 @@ const Connect = () => {
               </button>
               <button
                 onClick={() => showToast(`Coffee chat scheduled with ${person.name}!`)}
-                className="text-[13.5px] font-semibold bg-[#fefdf9] text-amber-800 border border-[#ebe1d1] py-2.5 px-4 rounded-full hover:bg-[#faf6f0] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_2px_10px_rgb(0,0,0,0.02)]"
+                className="text-[13.5px] font-semibold bg-card-soft text-text-main border border-border-warm py-2.5 px-4 rounded-full hover:bg-card hover:border-border-hover transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               >
                 <Coffee className="w-4 h-4" />
                 Coffee chat

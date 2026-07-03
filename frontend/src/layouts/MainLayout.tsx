@@ -3,6 +3,7 @@ import { Outlet, NavLink, Link, useNavigate } from 'react-router-dom';
 import { Compass, Map, Users, MessageCircle, ShieldCheck, Building } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { ThemeToggle } from '../components/ThemeToggle';
 
 function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
@@ -30,19 +31,19 @@ const MainLayout = () => {
   const visibleNavItems = navItems.filter((item) => item.roles.includes(role));
 
   return (
-    <div className="h-[100dvh] flex flex-col md:flex-row font-sans overflow-hidden bg-warm-offwhite">
+    <div className="h-[100dvh] flex flex-col md:flex-row font-sans overflow-hidden bg-app text-text-main transition-colors duration-300">
       {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-warm-offwhite flex flex-col shrink-0 border-r border-[#e6d8c3] md:h-full z-10">
+      <aside className="w-full md:w-64 bg-sidebar flex flex-col shrink-0 border-r border-border-warm md:h-full z-10 transition-colors duration-300">
         {/* Logo */}
         <div className="p-5 pb-2">
           <Link to="/" className="inline-block cursor-pointer">
-            <h1 className="text-xl font-bold text-deep-navy flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-              <div className="w-7 h-7 rounded-lg bg-soft-teal grid place-items-center shadow-sm">
-                <Compass className="w-4 h-4 text-white" />
+            <h1 className="text-xl font-bold text-text-main flex items-center gap-2.5 hover:opacity-80 transition-opacity">
+              <div className="w-7 h-7 rounded-lg bg-accent-teal grid place-items-center shadow-sm">
+                <Compass className="w-4 h-4 text-app" />
               </div>
               <div className="flex items-baseline gap-1.5">
                 <span className="font-display">Meridian</span>
-                <span className="font-sans text-[17px] font-semibold text-deep-navy/80">Compass</span>
+                <span className="font-sans text-[17px] font-semibold opacity-80">Compass</span>
               </div>
             </h1>
           </Link>
@@ -57,10 +58,10 @@ const MainLayout = () => {
               end={item.path === '/'}
               className={({ isActive }) =>
                 cn(
-                  'flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all',
+                  'flex items-center gap-3 px-4 py-2.5 rounded-full text-[13px] font-medium transition-all cursor-pointer',
                   isActive
-                    ? 'bg-deep-navy text-white shadow-sm'
-                    : 'text-slate-500 hover:bg-[#ebe1d1] hover:text-deep-navy'
+                    ? 'bg-text-main text-app shadow-sm'
+                    : 'text-text-muted hover:bg-card-soft hover:text-text-main'
                 )
               }
             >
@@ -72,14 +73,14 @@ const MainLayout = () => {
 
         {/* Role Switcher */}
         <div className="p-4 pb-6 mt-auto">
-          <div className="bg-[#fff8ea] rounded-[20px] p-3 shadow-sm border border-[#e6d8c3] relative overflow-hidden">
-            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2.5 px-1">Viewing as</div>
-            <div className="flex bg-[#f3eee5] p-1 rounded-[16px] border border-[#eee7dc]/50">
+          <div className="bg-card rounded-[20px] p-3 shadow-sm border border-border-warm relative overflow-hidden transition-colors duration-300">
+            <div className="text-[10px] font-bold text-text-muted uppercase tracking-wider mb-2.5 px-1">Viewing as</div>
+            <div className="flex bg-card-soft p-1 rounded-[16px] border border-border-warm/50 transition-colors duration-300">
               <button
                 onClick={() => handleRoleChange('employee')}
                 className={cn(
                   "flex-1 text-[11px] font-semibold py-1.5 rounded-full transition-all cursor-pointer text-center",
-                  role === 'employee' ? 'bg-deep-navy text-white shadow-sm' : 'text-slate-500 hover:text-deep-navy hover:bg-[#ebe4d8]'
+                  role === 'employee' ? 'bg-text-main text-app shadow-sm' : 'text-text-muted hover:text-text-main hover:bg-card'
                 )}
               >
                 New Employee
@@ -88,7 +89,7 @@ const MainLayout = () => {
                 onClick={() => handleRoleChange('hr')}
                 className={cn(
                   "flex-1 text-[11px] font-semibold py-1.5 rounded-full transition-all cursor-pointer text-center",
-                  role === 'hr' ? 'bg-deep-navy text-white shadow-sm' : 'text-slate-500 hover:text-deep-navy hover:bg-[#ebe4d8]'
+                  role === 'hr' ? 'bg-text-main text-app shadow-sm' : 'text-text-muted hover:text-text-main hover:bg-card'
                 )}
               >
                 HR
@@ -99,8 +100,9 @@ const MainLayout = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 bg-warm-offwhite overflow-y-auto h-[100dvh] relative">
+      <main className="flex-1 bg-app overflow-y-auto h-[100dvh] relative transition-colors duration-300">
         <div className="p-6 md:px-12 md:py-10 max-w-7xl mx-auto">
+          <ThemeToggle />
           <Outlet />
         </div>
       </main>
