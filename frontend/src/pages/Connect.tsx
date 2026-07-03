@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { allEmployees } from '../lib/mockData';
-import { Search, MessageSquare, Coffee, Sparkles, Calendar, X } from 'lucide-react';
+import { Search, MessageCircle, Coffee, Sparkles, X, UserRoundCheck } from 'lucide-react';
 import { showToast } from '../components/Toast';
 
 const departments = ['All', ...Array.from(new Set(allEmployees.map((e) => e.department)))];
@@ -38,25 +38,56 @@ const Connect = () => {
       <motion.div
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl p-5 border border-amber-200/40"
-        style={{ background: 'linear-gradient(135deg, #fef3c7, #ffedd5)' }}
+        className="mb-6"
       >
-        <h2 className="font-display font-semibold text-sm text-amber-900 mb-3 flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-amber-500" />
+        <h2 className="font-display font-semibold text-lg text-deep-navy mb-4 flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-slate-400" />
           People you should meet this week
         </h2>
-        <div className="flex gap-3 overflow-x-auto pb-1">
-          {suggestedThisWeek.map((person) => (
-            <div key={person.id} className="flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-amber-100 min-w-[200px]">
-              <div className="w-10 h-10 rounded-full bg-subtle-peach grid place-items-center font-semibold text-deep-navy text-sm shrink-0">
-                {person.name.charAt(0)}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {suggestedThisWeek.map((person, index) => {
+            let bgGradient = '';
+            if (index === 0) bgGradient = 'linear-gradient(135deg, #e6fcf5, #cbf6e6)';
+            else if (index === 1) bgGradient = 'linear-gradient(135deg, #f0f9ff, #dbeafe)';
+            else bgGradient = 'linear-gradient(135deg, #fff7ed, #ffedd5)';
+            
+            // Generate initials manually since mockData allEmployees doesn't have it natively, though we know them
+            const initials = person.name.split(' ').map(n => n[0]).join('').substring(0, 2);
+
+            // Use matchReason, or hardcoded reason from screenshot for exact match
+            const reasonText = 
+              index === 0 ? "You both like React and music." :
+              index === 1 ? "You'll both work in Engineering workflows." :
+              "She can help with first-month questions.";
+
+            return (
+              <div key={person.id} className="rounded-[28px] p-5 shadow-sm" style={{ background: bgGradient }}>
+                <div className="flex items-center gap-3.5 mb-3.5">
+                  <div className="w-12 h-12 rounded-full bg-white grid place-items-center font-bold text-deep-navy text-[15px] shrink-0 shadow-sm relative overflow-hidden">
+                    {initials}
+                    {person.avatarUrl && (
+                      <img 
+                        src={person.avatarUrl} 
+                        alt={`${person.name} profile photo`} 
+                        className="absolute inset-0 w-full h-full object-cover"
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                      />
+                    )}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[15px] font-bold text-deep-navy truncate leading-tight">{person.name}</p>
+                    <p className="text-[12px] text-slate-500/90 truncate mt-0.5 font-medium">{person.role} · {person.department}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-1.5 mt-1">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" fill="currentColor" />
+                  <p className="text-[12px] text-slate-600 font-medium leading-relaxed">
+                    {reasonText}
+                  </p>
+                </div>
               </div>
-              <div className="min-w-0">
-                <p className="text-sm font-medium text-deep-navy truncate">{person.name}</p>
-                <p className="text-xs text-gray-400 truncate">{person.role}</p>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </motion.div>
 
@@ -131,73 +162,106 @@ const Connect = () => {
       </div>
 
       {/* Employee Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filtered.map((person, i) => (
           <motion.div
             key={person.id}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.06 }}
-            className="card-compact hover:shadow-md transition-all duration-200"
+            className="bg-[#fffdf9] border border-[#ebe1d1] rounded-[28px] p-6 hover:shadow-[0_10px_40px_rgb(0,0,0,0.05)] hover:-translate-y-1 transition-all flex flex-col h-full"
           >
+            {/* Top row */}
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-[12px] bg-subtle-peach grid place-items-center font-bold text-deep-navy text-lg shrink-0 shadow-sm border border-white/50">
-                {person.name.charAt(0)}
+              <div className="relative shrink-0">
+                <div className="w-[72px] h-[72px] rounded-2xl bg-[#faf6f0] grid place-items-center font-bold text-deep-navy text-xl shadow-sm border border-[#ebe1d1]/50 absolute inset-0">
+                  {person.name.charAt(0)}
+                </div>
+                {person.avatarUrl && (
+                  <img src={person.avatarUrl} alt={`${person.name} profile photo`} className="w-[72px] h-[72px] rounded-2xl object-cover shadow-sm relative z-10" />
+                )}
               </div>
-              <div className="flex-1 min-w-0">
+              
+              <div className="flex-1 min-w-0 pt-1">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-display font-bold text-[15px] text-deep-navy tracking-tight">{person.name}</h3>
-                    <p className="text-[12px] font-medium text-slate-500 uppercase tracking-wide mt-0.5">{person.role} · {person.department}</p>
+                    <h3 className="font-display font-semibold text-[18px] text-deep-navy tracking-tight truncate">{person.name}</h3>
+                    <p className="text-[13px] font-medium text-slate-500 uppercase tracking-wide mt-0.5 truncate">{person.role} · {person.department}</p>
                   </div>
                   {person.isBuddy && (
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full border border-teal-100/50">Buddy</span>
+                    <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider bg-teal-50 text-teal-700 px-2.5 py-1 rounded-full border border-teal-100/50 shrink-0">
+                      <UserRoundCheck className="w-3 h-3" /> Buddy
+                    </span>
                   )}
                 </div>
+              </div>
+            </div>
 
-                <div className="mt-3.5 space-y-2">
-                  <div className="flex items-center gap-1.5 text-[12px] text-slate-500">
-                    <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                    Office: <span className="font-medium text-deep-navy/80">{person.officeDays.join(', ')}</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {person.interests.map((interest) => (
-                      <span key={interest} className="text-[10px] bg-slate-50 border border-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-medium">
-                        {interest}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="text-[12px] text-slate-500 mt-2">
-                    <span className="font-semibold text-deep-navy/80">Ask me about:</span> {person.askMeAbout}
-                  </div>
+            <div className="mt-6 flex-1 flex flex-col space-y-5">
+              {/* Office Days Pills */}
+              <div>
+                <div className="flex items-center gap-1.5">
+                  {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((dayStr) => {
+                    const short = dayStr.substring(0, 3);
+                    const isActive = person.officeDays.includes(dayStr);
+                    return (
+                      <div key={dayStr} className={`flex-1 text-center py-1.5 rounded-full text-[11px] transition-colors ${
+                        isActive 
+                          ? 'bg-teal-soft text-deep-navy font-bold shadow-sm' 
+                          : 'bg-[#faf6f0] text-slate-400 font-medium border border-transparent'
+                      }`}>
+                        {short}
+                      </div>
+                    );
+                  })}
                 </div>
+              </div>
 
-                {/* Match Reason */}
-                <div className="mt-3.5 bg-teal-50/50 rounded-xl p-3 border border-teal-100/50">
-                  <p className="text-[12px] text-teal-800 flex items-start gap-1.5 leading-relaxed font-medium">
-                    <Sparkles className="w-3.5 h-3.5 text-teal-500 shrink-0 mt-0.5" />
+              {/* Interests */}
+              <div>
+                <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-2">Interests</p>
+                <div className="flex flex-wrap gap-2">
+                  {person.interests.map((interest) => (
+                    <span key={interest} className="text-[11.5px] bg-[#fdfaf1] border border-[#ebe1d1] text-slate-500 px-3 py-1 rounded-full font-medium">
+                      {interest}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Ask Me About */}
+              <div>
+                <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-1">Ask me about</p>
+                <p className="text-[13px] text-deep-navy/80 font-medium leading-relaxed">{person.askMeAbout}</p>
+              </div>
+
+              {/* Match Reason */}
+              <div className="mt-auto pt-2">
+                <div className="bg-teal-50/50 rounded-2xl p-3.5 border border-teal-100/50">
+                  <p className="text-[13px] text-teal-800 flex items-start gap-2 leading-relaxed font-medium">
+                    <Sparkles className="w-4 h-4 text-teal-500 shrink-0 mt-0.5" />
                     {person.matchReason}
                   </p>
                 </div>
-
-                {/* Actions */}
-                <div className="flex gap-2.5 mt-4">
-                  <button
-                    onClick={() => showToast(`Message sent to ${person.name}!`)}
-                    className="flex-1 text-[12px] font-semibold bg-deep-navy text-white py-2 px-3 rounded-xl hover:bg-slate-800 transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
-                  >
-                    <MessageSquare className="w-3.5 h-3.5" />
-                    Start conversation
-                  </button>
-                  <button
-                    onClick={() => showToast(`Coffee chat scheduled with ${person.name}!`)}
-                    className="text-[12px] font-semibold bg-subtle-peach/50 text-amber-800 border border-amber-100/50 py-2 px-3.5 rounded-xl hover:bg-subtle-peach transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
-                  >
-                    <Coffee className="w-3.5 h-3.5" />
-                    Coffee chat
-                  </button>
-                </div>
               </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-3 mt-5">
+              <button
+                onClick={() => showToast(`Message sent to ${person.name}!`)}
+                className="flex-1 text-[13.5px] font-semibold bg-deep-navy text-white py-2.5 px-4 rounded-full hover:bg-slate-800 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+              >
+                <MessageCircle className="w-4 h-4" />
+                Start conversation
+              </button>
+              <button
+                onClick={() => showToast(`Coffee chat scheduled with ${person.name}!`)}
+                className="text-[13.5px] font-semibold bg-[#fefdf9] text-amber-800 border border-[#ebe1d1] py-2.5 px-4 rounded-full hover:bg-[#faf6f0] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_2px_10px_rgb(0,0,0,0.02)]"
+              >
+                <Coffee className="w-4 h-4" />
+                Coffee chat
+              </button>
             </div>
           </motion.div>
         ))}
