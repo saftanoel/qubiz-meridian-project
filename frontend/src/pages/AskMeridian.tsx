@@ -29,10 +29,10 @@ const AskMeridian = () => {
         <div className="inline-flex items-center gap-2 rounded-full bg-light-mint px-3 py-1 text-xs font-medium text-soft-teal">
           <MessageCircle className="h-3.5 w-3.5" /> Ask anything
         </div>
-        <h1 className="font-display text-3xl font-bold text-deep-navy">
+        <h1 className="font-display text-4xl font-semibold text-deep-navy tracking-tight">
           The questions no one thinks to ask.
         </h1>
-        <p className="text-gray-500 max-w-md mx-auto">
+        <p className="text-gray-500 mt-2 text-[15px] max-w-md mx-auto">
           No question is too small. Find answers about how things actually work at Meridian.
         </p>
       </div>

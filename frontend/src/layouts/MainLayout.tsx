@@ -35,11 +35,14 @@ const MainLayout = () => {
       <aside className="w-full md:w-64 bg-warm-offwhite flex flex-col shrink-0 border-r border-[#eee7dc] md:h-full z-10">
         {/* Logo */}
         <div className="p-5 pb-2">
-          <h1 className="text-xl font-display font-bold text-deep-navy flex items-center gap-2.5">
+          <h1 className="text-xl font-bold text-deep-navy flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-soft-teal grid place-items-center shadow-sm">
               <Compass className="w-4 h-4 text-white" />
             </div>
-            Meridian
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-display">Meridian</span>
+              <span className="font-sans text-[17px] font-semibold text-deep-navy/80">Compass</span>
+            </div>
           </h1>
         </div>
 

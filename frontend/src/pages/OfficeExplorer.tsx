@@ -11,8 +11,8 @@ const OfficeExplorer = () => {
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
       <div>
-        <h1 className="font-display text-3xl font-bold text-deep-navy">Office Explorer</h1>
-        <p className="text-gray-500 mt-1">Click on different areas to learn about our workspace.</p>
+        <h1 className="font-display text-4xl font-semibold text-deep-navy tracking-tight">Office Explorer</h1>
+        <p className="text-gray-500 mt-2 text-[15px]">Click on different areas to learn about our workspace.</p>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">

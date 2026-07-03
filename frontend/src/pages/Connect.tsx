@@ -30,8 +30,8 @@ const Connect = () => {
   return (
     <div className="space-y-6 max-w-5xl mx-auto">
       <div>
-        <h1 className="font-display text-3xl font-bold text-deep-navy">Meridian Connect</h1>
-        <p className="text-gray-500 mt-1">Meet people who can help you feel at home.</p>
+        <h1 className="font-display text-4xl font-semibold text-deep-navy tracking-tight">Meridian Connect</h1>
+        <p className="text-gray-500 mt-2 text-[15px]">Meet people who can help you feel at home.</p>
       </div>
 
       {/* People to Meet This Week */}

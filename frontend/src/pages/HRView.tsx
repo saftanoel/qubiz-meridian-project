@@ -32,8 +32,8 @@ const HRView = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       <div>
-        <h1 className="font-display text-3xl font-bold text-deep-navy">HR Dashboard</h1>
-        <p className="text-gray-500 mt-1">Overview of all new hire onboarding — see what needs your attention.</p>
+        <h1 className="font-display text-4xl font-semibold text-deep-navy tracking-tight">HR Dashboard</h1>
+        <p className="text-gray-500 mt-2 text-[15px]">Overview of all new hire onboarding — see what needs your attention.</p>
       </div>
 
       {/* Stats */}
@@ -49,7 +49,7 @@ const HRView = () => {
             <div className={`w-9 h-9 rounded-lg ${stat.color} flex items-center justify-center mb-3`}>
               <stat.icon className="w-[18px] h-[18px]" />
             </div>
-            <p className="text-2xl font-display font-bold text-deep-navy">{stat.value}</p>
+            <p className="text-[28px] font-display font-semibold text-deep-navy leading-none mt-1">{stat.value}</p>
             <p className="text-xs text-gray-500 mt-0.5">{stat.label}</p>
           </motion.div>
         ))}

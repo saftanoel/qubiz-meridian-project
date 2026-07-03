@@ -48,10 +48,9 @@ const Journey = () => {
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
-      {/* Header */}
       <div>
-        <h1 className="font-display text-3xl font-bold text-deep-navy">Meridian Journey</h1>
-        <p className="text-gray-500 mt-1">Your 30-day onboarding path — one step at a time.</p>
+        <h1 className="font-display text-4xl font-semibold text-deep-navy tracking-tight">Meridian Journey</h1>
+        <p className="text-gray-500 mt-2 text-[15px]">Your 30-day onboarding path — one step at a time.</p>
       </div>
 
       {/* Overall Progress */}
@@ -63,7 +62,7 @@ const Journey = () => {
         <div className="flex items-end justify-between mb-3">
           <div>
             <p className="text-sm text-gray-500">Overall Progress</p>
-            <p className="text-3xl font-display font-bold text-deep-navy">{progressPct}%</p>
+            <p className="text-[32px] font-display font-semibold text-deep-navy leading-none mt-1">{progressPct}%</p>
           </div>
           <p className="text-sm text-gray-400">
             {doneCount} of {totalCount} tasks
