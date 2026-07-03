@@ -47,9 +47,9 @@ const Connect = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {suggestedThisWeek.map((person, index) => {
             let bgGradient = '';
-            if (index === 0) bgGradient = 'linear-gradient(135deg, #e6fcf5, #cbf6e6)';
-            else if (index === 1) bgGradient = 'linear-gradient(135deg, #f0f9ff, #dbeafe)';
-            else bgGradient = 'linear-gradient(135deg, #fff7ed, #ffedd5)';
+            if (index === 0) bgGradient = 'linear-gradient(135deg, var(--color-light-mint), var(--color-teal-soft))';
+            else if (index === 1) bgGradient = 'linear-gradient(135deg, var(--color-sky), var(--color-sky))';
+            else bgGradient = 'linear-gradient(135deg, var(--color-subtle-peach), var(--color-subtle-peach))';
             
             // Generate initials manually since mockData allEmployees doesn't have it natively, though we know them
             const initials = person.name.split(' ').map(n => n[0]).join('').substring(0, 2);
@@ -250,7 +250,7 @@ const Connect = () => {
             <div className="flex gap-3 mt-5">
               <button
                 onClick={() => showToast(`Message sent to ${person.name}!`)}
-                className="flex-1 text-[13.5px] font-semibold bg-deep-navy text-white py-2.5 px-4 rounded-full hover:bg-slate-800 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                className="flex-1 text-[13.5px] font-semibold bg-text-main text-app py-2.5 px-4 rounded-full hover:opacity-90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               >
                 <MessageCircle className="w-4 h-4" />
                 Start conversation

@@ -60,7 +60,7 @@ const Dashboard = () => {
               </h2>
               <p className="text-[13px] text-slate-500 mt-1">Small, kind steps. Nothing urgent, nothing scary.</p>
             </div>
-            <Link to="/journey" className="hidden sm:inline-flex items-center gap-1.5 text-[14px] font-bold text-soft-teal hover:text-teal-700 transition-colors bg-teal-50/50 hover:bg-teal-50 px-3.5 py-1.5 rounded-full">
+            <Link to="/journey" className="hidden sm:inline-flex items-center gap-1.5 text-[14px] font-bold text-soft-teal hover:opacity-80 transition-opacity bg-soft-teal/10 hover:bg-soft-teal/20 px-3.5 py-1.5 rounded-full">
               See all <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
@@ -132,7 +132,7 @@ const Dashboard = () => {
               </h2>
               <p className="text-[13px] text-slate-500 mt-1">Based on your team and office days.</p>
             </div>
-            <Link to="/connect" className="hidden sm:inline-flex items-center gap-1.5 text-[14px] font-bold text-soft-teal hover:text-teal-700 transition-colors bg-teal-50/50 hover:bg-teal-50 px-3.5 py-1.5 rounded-full">
+            <Link to="/connect" className="hidden sm:inline-flex items-center gap-1.5 text-[14px] font-bold text-soft-teal hover:opacity-80 transition-opacity bg-soft-teal/10 hover:bg-soft-teal/20 px-3.5 py-1.5 rounded-full">
               Meridian Connect <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
