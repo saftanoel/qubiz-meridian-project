@@ -60,7 +60,7 @@ const Dashboard = () => {
               </h2>
               <p className="text-[13px] text-slate-500 mt-1">Small, kind steps. Nothing urgent, nothing scary.</p>
             </div>
-            <Link to="/journey" className="hidden sm:inline-flex items-center gap-1.5 text-[13px] font-semibold text-soft-teal hover:text-deep-navy transition-colors">
+            <Link to="/journey" className="hidden sm:inline-flex items-center gap-1.5 text-[14px] font-bold text-soft-teal hover:text-teal-700 transition-colors bg-teal-50/50 hover:bg-teal-50 px-3.5 py-1.5 rounded-full">
               See all <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
@@ -68,13 +68,13 @@ const Dashboard = () => {
             {nextActions.map((a) => {
               const bg = a.tone === 'peach' ? 'bg-subtle-peach' : a.tone === 'teal' ? 'bg-teal-soft' : 'bg-sky';
               return (
-                <li key={a.id} className="group flex items-center gap-4 rounded-xl border border-slate-100 bg-slate-50/50 p-3.5 hover:bg-white hover:shadow-sm transition-all cursor-pointer">
-                  <div className={`grid h-9 w-9 shrink-0 place-items-center rounded-[10px] ${bg}`}>
-                    <CircleCheck className="h-4 w-4 text-deep-navy/50" />
+                <li key={a.id} className="group flex items-center gap-5 rounded-2xl border border-[#ebe1d1]/60 bg-[#fdfaf1]/50 p-4 hover:bg-white hover:shadow-[0_4px_20px_rgb(0,0,0,0.03)] transition-all cursor-pointer">
+                  <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-xl ${bg}`}>
+                    <CircleCheck className="h-5 w-5 text-deep-navy/60" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="text-[14px] font-semibold text-deep-navy truncate">{a.title}</div>
-                    <div className="text-[12px] text-slate-500 mt-0.5">{a.meta}</div>
+                    <div className="text-[14.5px] font-semibold text-deep-navy truncate">{a.title}</div>
+                    <div className="text-[12.5px] text-slate-500 mt-0.5">{a.meta}</div>
                   </div>
                   <button className="text-[12px] font-semibold text-soft-teal opacity-0 group-hover:opacity-100 transition-opacity">
                     Mark done
@@ -132,23 +132,26 @@ const Dashboard = () => {
               </h2>
               <p className="text-[13px] text-slate-500 mt-1">Based on your team and office days.</p>
             </div>
-            <Link to="/connect" className="hidden sm:inline-flex items-center gap-1.5 text-[13px] font-semibold text-soft-teal hover:text-deep-navy transition-colors">
-              Connect <ArrowRight className="h-3.5 w-3.5" />
+            <Link to="/connect" className="hidden sm:inline-flex items-center gap-1.5 text-[14px] font-bold text-soft-teal hover:text-teal-700 transition-colors bg-teal-50/50 hover:bg-teal-50 px-3.5 py-1.5 rounded-full">
+              Meridian Connect <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
-          <div className="grid sm:grid-cols-3 gap-3">
+          <div className="grid sm:grid-cols-3 gap-4">
             {suggestedConnections.map((p) => (
-              <div key={p.id} className="card-compact bg-slate-50/50 hover:bg-white transition-all cursor-pointer group">
+              <div key={p.id} className="bg-[#fefdf9] border border-[#ebe1d1] rounded-3xl p-5 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all cursor-pointer flex flex-col h-full group">
                 <div className="flex items-center gap-3">
-                  <div className="grid h-10 w-10 place-items-center rounded-[10px] font-semibold text-deep-navy text-sm shadow-sm" style={{ background: p.color }}>
+                  <div className="grid h-11 w-11 place-items-center rounded-2xl font-semibold text-deep-navy text-[15px] shadow-sm" style={{ background: p.color }}>
                     {p.initials}
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[13px] font-bold text-deep-navy truncate">{p.name}</div>
-                    <div className="text-[11px] font-medium text-slate-500 truncate uppercase tracking-wide mt-0.5">{p.role}</div>
+                    <div className="text-[14px] font-bold text-deep-navy truncate group-hover:text-soft-teal transition-colors">{p.name}</div>
+                    <div className="text-[12px] font-medium text-slate-500 truncate uppercase tracking-wide mt-0.5">{p.role}</div>
                   </div>
                 </div>
-                <p className="mt-3 text-[12px] text-slate-600 leading-relaxed line-clamp-2">{p.reason}</p>
+                <p className="mt-4 text-[13px] text-slate-600 leading-relaxed line-clamp-2 flex-1">{p.reason}</p>
+                <button className="mt-4 w-full bg-[#fdfaf1] border border-[#ebe1d1]/80 text-deep-navy hover:bg-[#faf6f0] text-[12.5px] font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors">
+                  <UsersRound className="h-3.5 w-3.5 text-soft-teal" /> Coffee chat
+                </button>
               </div>
             ))}
           </div>
@@ -168,16 +171,16 @@ const Dashboard = () => {
             {upcomingOfficeDays.map((d) => {
               const bg = d.tone === 'peach' ? 'bg-subtle-peach' : d.tone === 'teal' ? 'bg-teal-soft' : 'bg-sky';
               return (
-                <li key={d.date} className="flex items-center gap-3 rounded-xl p-2.5 hover:bg-slate-50 transition cursor-pointer border border-transparent hover:border-slate-100">
-                  <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-[10px] text-deep-navy ${bg}`}>
+                <li key={d.date} className="flex items-center gap-4 rounded-2xl p-3 hover:bg-[#faf6f0]/50 transition cursor-pointer border border-transparent hover:border-[#ebe1d1]">
+                  <div className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl text-deep-navy shadow-[0_2px_10px_rgb(0,0,0,0.02)] ${bg}`}>
                     <div className="text-center leading-none">
-                      <div className="text-[9px] uppercase tracking-wider opacity-70 mb-0.5">{d.day}</div>
-                      <div className="text-[13px] font-bold">{d.date.split(' ')[1]}</div>
+                      <div className="text-[9.5px] uppercase font-bold tracking-wider opacity-60 mb-1">{d.day}</div>
+                      <div className="text-[14px] font-bold">{d.date.split(' ')[1]}</div>
                     </div>
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[13px] font-semibold text-deep-navy truncate">{d.label}</div>
-                    <div className="text-[11px] text-slate-500">{d.date}</div>
+                    <div className="text-[14px] font-semibold text-deep-navy truncate">{d.label}</div>
+                    <div className="text-[12.5px] text-slate-500 mt-0.5">{d.date}</div>
                   </div>
                 </li>
               );
@@ -231,13 +234,13 @@ function Stat({ dot, label, value }: { dot: string; label: string; value: number
 
 function QuickCard({ to, title, desc, icon: Icon, bg }: { to: string; title: string; desc: string; icon: React.ElementType; bg: string }) {
   return (
-    <Link to={to} className="group card-compact hover:shadow-md transition-all flex flex-col justify-between h-[120px]">
-      <div className={`grid h-9 w-9 place-items-center rounded-[10px] ${bg}`}>
+    <Link to={to} className="group bg-[#fffdf9] border border-[#ebe1d1] rounded-3xl p-5 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-0.5 transition-all flex flex-col h-[130px]">
+      <div className={`grid h-10 w-10 place-items-center rounded-2xl ${bg}`}>
         <Icon className="h-4 w-4 text-deep-navy" />
       </div>
-      <div>
-        <div className="text-[13px] font-bold text-deep-navy group-hover:text-soft-teal transition-colors">{title}</div>
-        <div className="text-[12px] text-slate-500 mt-0.5">{desc}</div>
+      <div className="mt-auto pt-4">
+        <div className="text-[14px] font-bold text-deep-navy group-hover:text-soft-teal transition-colors">{title}</div>
+        <div className="text-[12.5px] text-slate-500 mt-0.5">{desc}</div>
       </div>
     </Link>
   );

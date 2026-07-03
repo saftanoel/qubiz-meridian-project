@@ -34,32 +34,37 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  ::selection {
+    background-color: var(--color-deep-navy);
+    color: var(--color-warm-offwhite);
+  }
 }
 
 @layer utilities {
   .card {
-    @apply bg-white rounded-2xl shadow-[var(--shadow-soft)] border border-slate-100 p-6;
+    @apply bg-[#fffdf9] rounded-[28px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#ebe1d1] p-8;
   }
   .card-compact {
-    @apply bg-white rounded-xl shadow-[var(--shadow-soft)] border border-slate-100 p-4;
+    @apply bg-[#fffdf9] rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-[#ebe1d1] p-5;
   }
   .card-mint {
-    @apply bg-light-mint rounded-2xl shadow-[var(--shadow-soft)] border border-transparent p-6;
+    @apply bg-light-mint rounded-[28px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-transparent p-8;
   }
   .card-blue {
-    @apply bg-light-blue rounded-2xl shadow-[var(--shadow-soft)] border border-transparent p-6;
+    @apply bg-light-blue rounded-[28px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-transparent p-8;
   }
   .card-peach {
-    @apply bg-subtle-peach rounded-2xl shadow-[var(--shadow-soft)] border border-transparent p-6;
+    @apply bg-subtle-peach rounded-[28px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-transparent p-8;
   }
   .card-warning {
-    @apply bg-subtle-red rounded-2xl shadow-[var(--shadow-soft)] border border-red-50 p-6;
+    @apply bg-subtle-red rounded-[28px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-red-50 p-8;
   }
   .btn-primary {
-    @apply bg-deep-navy text-white rounded-xl px-4 py-2.5 font-medium hover:bg-slate-800 transition-all cursor-pointer shadow-sm;
+    @apply bg-deep-navy text-white rounded-full px-5 py-2.5 font-medium hover:bg-slate-800 transition-all cursor-pointer shadow-sm;
   }
   .btn-secondary {
-    @apply bg-white border border-slate-200 text-deep-navy rounded-xl px-4 py-2.5 font-medium hover:bg-slate-50 transition-colors cursor-pointer shadow-sm;
+    @apply bg-[#fffdf9] text-deep-navy border border-[#ebe1d1] rounded-full px-5 py-2.5 font-medium hover:bg-[#faf6f0] hover:shadow-sm transition-all cursor-pointer shadow-[0_2px_10px_rgb(0,0,0,0.02)];
   }
   .font-display {
     font-family: var(--font-display);
