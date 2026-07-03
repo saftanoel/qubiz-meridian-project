@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import * as lucideIcons from 'lucide-react';
 import { CheckCircle2, Circle, Clock, ChevronDown, ChevronUp, User, Timer } from 'lucide-react';
 import { journeyPhases as initialPhases, type JourneyPhase, type TaskStatus } from '../lib/mockData';
 
@@ -99,6 +100,8 @@ const Journey = () => {
           const phasePct = Math.round((phaseDone / phaseTotal) * 100);
           const isOpen = expanded.includes(phase.id);
 
+          const PhaseIcon = lucideIcons[phase.iconName as keyof typeof lucideIcons] as React.ElementType;
+
           return (
             <motion.div
               key={phase.id}
@@ -113,7 +116,9 @@ const Journey = () => {
                 className="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50/50 transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-xl">{phase.emoji}</span>
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-slate-100/70 text-slate-500">
+                    {PhaseIcon && <PhaseIcon className="w-5 h-5" />}
+                  </div>
                   <div className="text-left">
                     <h3 className="font-display font-semibold text-deep-navy">{phase.title}</h3>
                     <p className="text-xs text-gray-400 mt-0.5">

@@ -30,9 +30,9 @@ const MainLayout = () => {
   const visibleNavItems = navItems.filter((item) => item.roles.includes(role));
 
   return (
-    <div className="h-[100dvh] flex flex-col md:flex-row font-sans overflow-hidden bg-[#fcfaf8]">
+    <div className="h-[100dvh] flex flex-col md:flex-row font-sans overflow-hidden bg-warm-offwhite">
       {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-[#fcfaf8] flex flex-col shrink-0 border-r border-[#eee7dc] md:h-full z-10">
+      <aside className="w-full md:w-64 bg-warm-offwhite flex flex-col shrink-0 border-r border-[#eee7dc] md:h-full z-10">
         {/* Logo */}
         <div className="p-5 pb-2">
           <h1 className="text-xl font-display font-bold text-deep-navy flex items-center gap-2.5">

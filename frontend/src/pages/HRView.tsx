@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { newHires, hrStats, actionItems, type HireStatus, type Severity } from '../lib/mockData';
-import { Users, TrendingUp, UserX, AlertTriangle, MessageSquare, CheckCircle2, AlertCircle } from 'lucide-react';
+import { UsersRound, TrendingUp, UserPlus, AlertTriangle, MessageSquare, CheckCircle2, AlertCircle } from 'lucide-react';
 import { showToast } from '../components/Toast';
 
 const statCards = [
-  { label: 'New hires this month', value: hrStats.newHiresCount, icon: Users, color: 'bg-teal-50 text-teal-600', accent: 'border-teal-200' },
+  { label: 'New hires this month', value: hrStats.newHiresCount, icon: UsersRound, color: 'bg-teal-50 text-teal-600', accent: 'border-teal-200' },
   { label: 'Avg. onboarding progress', value: `${hrStats.avgProgress}%`, icon: TrendingUp, color: 'bg-blue-50 text-blue-600', accent: 'border-blue-200' },
-  { label: 'Missing buddy assignments', value: hrStats.missingBuddies, icon: UserX, color: 'bg-amber-50 text-amber-600', accent: 'border-amber-200' },
+  { label: 'Missing buddy assignments', value: hrStats.missingBuddies, icon: UserPlus, color: 'bg-amber-50 text-amber-600', accent: 'border-amber-200' },
   { label: 'Tasks overdue', value: hrStats.overdueTasks, icon: AlertTriangle, color: 'bg-rose-50 text-rose-600', accent: 'border-rose-200' },
   { label: 'Pending check-ins', value: hrStats.pendingFeedback, icon: MessageSquare, color: 'bg-purple-50 text-purple-600', accent: 'border-purple-200' },
 ];
@@ -185,7 +185,7 @@ const HRView = () => {
           className="space-y-4"
         >
           <h2 className="font-display font-semibold text-deep-navy flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5 text-amber-500" />
+            <AlertCircle className="w-5 h-5 text-amber-500" />
             Action Required
           </h2>
 

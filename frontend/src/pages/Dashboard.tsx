@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Calendar, Circle, Compass, MapPin, MessageCircle, Sparkles, Users } from 'lucide-react';
+import { ArrowRight, Compass, MapPin, MessageCircle, Sparkles, Users, CircleCheck, TrendingUp, UsersRound, CalendarDays } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { employeeData, nextActions, suggestedConnections, upcomingOfficeDays, journeyPhases } from '../lib/mockData';
 
@@ -55,7 +55,9 @@ const Dashboard = () => {
         >
           <div className="flex items-center justify-between mb-5">
             <div>
-              <h2 className="text-[15px] font-bold text-deep-navy uppercase tracking-wider">Today's next actions</h2>
+              <h2 className="text-[15px] font-bold text-deep-navy uppercase tracking-wider flex items-center gap-2">
+                <CircleCheck className="h-4 w-4 text-slate-400" /> Today's next actions
+              </h2>
               <p className="text-[13px] text-slate-500 mt-1">Small, kind steps. Nothing urgent, nothing scary.</p>
             </div>
             <Link to="/journey" className="hidden sm:inline-flex items-center gap-1.5 text-[13px] font-semibold text-soft-teal hover:text-deep-navy transition-colors">
@@ -68,7 +70,7 @@ const Dashboard = () => {
               return (
                 <li key={a.id} className="group flex items-center gap-4 rounded-xl border border-slate-100 bg-slate-50/50 p-3.5 hover:bg-white hover:shadow-sm transition-all cursor-pointer">
                   <div className={`grid h-9 w-9 shrink-0 place-items-center rounded-[10px] ${bg}`}>
-                    <Circle className="h-3.5 w-3.5 text-deep-navy/50" />
+                    <CircleCheck className="h-4 w-4 text-deep-navy/50" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="text-[14px] font-semibold text-deep-navy truncate">{a.title}</div>
@@ -90,7 +92,9 @@ const Dashboard = () => {
           transition={{ delay: 0.15 }}
           className="card flex flex-col"
         >
-          <h2 className="text-[15px] font-bold text-deep-navy uppercase tracking-wider">First-week progress</h2>
+          <h2 className="text-[15px] font-bold text-deep-navy uppercase tracking-wider flex items-center gap-2">
+            <TrendingUp className="h-4 w-4 text-slate-400" /> First-week progress
+          </h2>
           <p className="text-[13px] text-slate-500 mt-1">You're just getting started.</p>
 
           <div className="mt-auto flex items-center gap-6 py-4">
@@ -123,7 +127,9 @@ const Dashboard = () => {
         >
           <div className="flex items-end justify-between mb-5">
             <div>
-              <h2 className="text-[15px] font-bold text-deep-navy uppercase tracking-wider">People to meet this week</h2>
+              <h2 className="text-[15px] font-bold text-deep-navy uppercase tracking-wider flex items-center gap-2">
+                <UsersRound className="h-4 w-4 text-slate-400" /> People to meet this week
+              </h2>
               <p className="text-[13px] text-slate-500 mt-1">Based on your team and office days.</p>
             </div>
             <Link to="/connect" className="hidden sm:inline-flex items-center gap-1.5 text-[13px] font-semibold text-soft-teal hover:text-deep-navy transition-colors">
@@ -156,7 +162,7 @@ const Dashboard = () => {
           className="card"
         >
           <h2 className="text-[15px] font-bold text-deep-navy uppercase tracking-wider flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-slate-400" /> Upcoming office days
+            <CalendarDays className="h-4 w-4 text-slate-400" /> Upcoming office days
           </h2>
           <ul className="mt-5 space-y-2">
             {upcomingOfficeDays.map((d) => {

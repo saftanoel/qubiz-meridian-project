@@ -31,7 +31,7 @@ export const suggestedConnections = [
 // Dashboard – upcoming office days
 // ──────────────────────────────────────────────
 export const upcomingOfficeDays = [
-  { day: "Mon", date: "Jul 7", label: "Your first day 🎉", tone: "peach" },
+  { day: "Mon", date: "Jul 7", label: "Your first day", tone: "peach" },
   { day: "Wed", date: "Jul 9", label: "Team anchor day", tone: "teal" },
   { day: "Thu", date: "Jul 10", label: "Team anchor day", tone: "teal" },
   { day: "Fri", date: "Jul 11", label: "Remote — demo day", tone: "sky" },
@@ -56,7 +56,7 @@ export interface JourneyTask {
 export interface JourneyPhase {
   id: string;
   title: string;
-  emoji: string;
+  iconName: string;
   tasks: JourneyTask[];
 }
 
@@ -64,7 +64,7 @@ export const journeyPhases: JourneyPhase[] = [
   {
     id: "phase-1",
     title: "Before Day 1",
-    emoji: "📋",
+    iconName: "ClipboardCheck",
     tasks: [
       { id: "t1", title: "Sign offer letter", description: "Review and digitally sign your employment agreement.", status: "done", priority: "High", time: "10 min", owner: "HR" },
       { id: "t2", title: "Complete background check", description: "Fill out the verification form sent to your email.", status: "done", priority: "High", time: "15 min", owner: "HR" },
@@ -74,7 +74,7 @@ export const journeyPhases: JourneyPhase[] = [
   {
     id: "phase-2",
     title: "First Day",
-    emoji: "🌟",
+    iconName: "CalendarCheck",
     tasks: [
       { id: "t4", title: "Check your first-day schedule", description: "Review the agenda HR prepared for your arrival.", status: "done", priority: "High", time: "3 min", owner: "HR" },
       { id: "t5", title: "Set up your laptop & accounts", description: "Follow the IT setup guide to configure your dev environment.", status: "in_progress", priority: "High", time: "30 min", owner: "IT" },
@@ -85,7 +85,7 @@ export const journeyPhases: JourneyPhase[] = [
   {
     id: "phase-3",
     title: "First Week",
-    emoji: "🚀",
+    iconName: "Route",
     tasks: [
       { id: "t8", title: "Complete security training", description: "Mandatory online module covering data protection basics.", status: "not_started", priority: "High", time: "20 min", owner: "IT" },
       { id: "t9", title: "Read the hybrid work guide", description: "Understand anchor days, remote policies, and office norms.", status: "not_started", priority: "Medium", time: "10 min", owner: "People Ops" },
@@ -95,7 +95,7 @@ export const journeyPhases: JourneyPhase[] = [
   {
     id: "phase-4",
     title: "First Month",
-    emoji: "🏆",
+    iconName: "Trophy",
     tasks: [
       { id: "t11", title: "30-day check-in with manager", description: "A relaxed 1:1 to discuss how you're settling in.", status: "not_started", priority: "High", time: "30 min", owner: "Engineering" },
       { id: "t12", title: "Present first mini-project", description: "Share a small piece of work with the team — show what you've learned.", status: "not_started", priority: "Medium", time: "45 min", owner: "Engineering" },
