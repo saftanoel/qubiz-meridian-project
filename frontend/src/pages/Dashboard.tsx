@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Compass, MapPin, MessageCircle, Sparkles, Users, CircleCheck, TrendingUp, UsersRound, CalendarDays, Loader2, WifiOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { getDashboard } from '../lib/api';
+import { getDashboard, updateTaskStatus } from '../lib/api';
 import { employeeData, nextActions as mockNextActions, suggestedConnections, upcomingOfficeDays as mockOfficeDays, journeyPhases } from '../lib/mockData';
 import type { DashboardResponse } from '../types/api';
 
@@ -10,6 +10,7 @@ const Dashboard = () => {
   const [data, setData] = useState<DashboardResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [updatingTask, setUpdatingTask] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -20,6 +21,20 @@ const Dashboard = () => {
       .finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, []);
+
+  const handleMarkDone = async (taskId: number) => {
+    if (updatingTask || error || !data) return;
+    setUpdatingTask(taskId);
+    try {
+      await updateTaskStatus(taskId, 'done');
+      const res = await getDashboard();
+      setData(res);
+    } catch (err) {
+      console.error("Failed to update task", err);
+    } finally {
+      setUpdatingTask(null);
+    }
+  };
 
   // Derive values — backend-first, mockData fallback
   const hireName = data?.new_hire?.name ?? employeeData.name;
@@ -129,8 +144,15 @@ const Dashboard = () => {
                     <div className="text-[14.5px] font-semibold text-deep-navy truncate">{a.title}</div>
                     <div className="text-[12.5px] text-slate-500 mt-0.5">{a.meta}</div>
                   </div>
-                  <button className="text-[12px] font-semibold text-soft-teal opacity-0 group-hover:opacity-100 transition-opacity">
-                    Mark done
+                  <button 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleMarkDone(a.id);
+                    }}
+                    disabled={updatingTask === a.id}
+                    className={`text-[12px] font-semibold text-soft-teal transition-opacity ${updatingTask === a.id ? 'opacity-100 cursor-not-allowed' : 'opacity-0 group-hover:opacity-100 cursor-pointer'}`}
+                  >
+                    {updatingTask === a.id ? 'Updating...' : 'Mark done'}
                   </button>
                 </li>
               );
