@@ -1,12 +1,79 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { officeAreas } from '../lib/mockData';
-import { Info, MapPin, Users, Lightbulb } from 'lucide-react';
+import { Info, MapPin, Users, Lightbulb, Loader2, WifiOff } from 'lucide-react';
+import { getOfficeLocations } from '../lib/api';
+import { officeAreas as mockOfficeAreas } from '../lib/mockData';
+import type { OfficeLocation } from '../types/api';
 
-type AreaKey = keyof typeof officeAreas;
+// Map the SVG keys to the backend names
+const SVG_MAPPING: Record<string, string> = {
+  kitchen: 'Kitchen & Cafe',
+  social: 'Social Space',
+  quiet: 'Quiet Zone',
+  reception: 'Reception & Lobby',
+  hr: 'HR & People Desk',
+  engineering: 'Engineering Pods',
+  meeting: 'Meeting Rooms',
+};
 
 const OfficeExplorer = () => {
-  const [selectedArea, setSelectedArea] = useState<AreaKey | null>(null);
+  const [locations, setLocations] = useState<OfficeLocation[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  
+  const [selectedKey, setSelectedKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    getOfficeLocations()
+      .then((res) => {
+        if (!cancelled) {
+          setLocations(res);
+          setError(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setError(true);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-3">
+          <Loader2 className="h-8 w-8 text-soft-teal animate-spin mx-auto" />
+          <p className="text-sm text-slate-500 font-medium">Loading office map…</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Get selected location data
+  let selectedData: OfficeLocation | null = null;
+  if (selectedKey) {
+    const targetName = SVG_MAPPING[selectedKey];
+    if (error || locations.length === 0) {
+      // Fallback to mockData
+      const mockObj = mockOfficeAreas[selectedKey as keyof typeof mockOfficeAreas];
+      if (mockObj) {
+        selectedData = {
+          id: 0,
+          name: mockObj.title,
+          description: mockObj.description,
+          tips: mockObj.tips,
+          who_you_can_meet: mockObj.whoYouMeet,
+          why_it_matters: mockObj.whyItMatters,
+        };
+      }
+    } else {
+      selectedData = locations.find((loc) => loc.name === targetName) || null;
+    }
+  }
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
@@ -14,6 +81,13 @@ const OfficeExplorer = () => {
         <h1 className="font-display text-4xl font-semibold text-deep-navy tracking-tight">Office Explorer</h1>
         <p className="text-gray-500 mt-2 text-[15px]">Click on different areas to learn about our workspace.</p>
       </div>
+
+      {error && (
+        <div className="flex items-center gap-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl px-4 py-3 text-sm font-medium">
+          <WifiOff className="h-4 w-4 shrink-0" />
+          Could not reach the Meridian backend. Showing cached office locations.
+        </div>
+      )}
 
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Map Container */}
@@ -24,45 +98,45 @@ const OfficeExplorer = () => {
               <rect x="0" y="0" width="450" height="450" fill="#f3f4f6" stroke="#e5e7eb" strokeWidth="2" rx="4" />
 
               {/* Kitchen */}
-              <motion.g onClick={() => setSelectedArea('kitchen')} className="cursor-pointer" whileHover={{ y: -5 }}>
-                <rect x="20" y="20" width="140" height="130" rx="6" fill={selectedArea === 'kitchen' ? '#4b9e9e' : '#e2f3f1'} stroke="#4b9e9e" strokeWidth="2" />
-                <text x="90" y="95" transform="rotate(-45 90 95) scale(1, 2)" textAnchor="middle" fill={selectedArea === 'kitchen' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="13">Kitchen</text>
+              <motion.g onClick={() => setSelectedKey('kitchen')} className="cursor-pointer" whileHover={{ y: -5 }}>
+                <rect x="20" y="20" width="140" height="130" rx="6" fill={selectedKey === 'kitchen' ? '#4b9e9e' : '#e2f3f1'} stroke="#4b9e9e" strokeWidth="2" />
+                <text x="90" y="95" transform="rotate(-45 90 95) scale(1, 2)" textAnchor="middle" fill={selectedKey === 'kitchen' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="13">Kitchen</text>
               </motion.g>
 
               {/* Social Space */}
-              <motion.g onClick={() => setSelectedArea('social')} className="cursor-pointer" whileHover={{ y: -5 }}>
-                <rect x="180" y="20" width="130" height="130" rx="6" fill={selectedArea === 'social' ? '#f59e0b' : '#fef3c7'} stroke="#f59e0b" strokeWidth="2" />
+              <motion.g onClick={() => setSelectedKey('social')} className="cursor-pointer" whileHover={{ y: -5 }}>
+                <rect x="180" y="20" width="130" height="130" rx="6" fill={selectedKey === 'social' ? '#f59e0b' : '#fef3c7'} stroke="#f59e0b" strokeWidth="2" />
                 <text x="245" y="95" transform="rotate(-45 245 95) scale(1, 2)" textAnchor="middle" fill="#1a2b4c" fontWeight="bold" fontSize="13">Social</text>
               </motion.g>
 
               {/* Quiet Zone */}
-              <motion.g onClick={() => setSelectedArea('quiet')} className="cursor-pointer" whileHover={{ y: -5 }}>
-                <rect x="330" y="20" width="100" height="130" rx="6" fill={selectedArea === 'quiet' ? '#8b5cf6' : '#ede9fe'} stroke="#8b5cf6" strokeWidth="2" />
-                <text x="380" y="95" transform="rotate(-45 380 95) scale(1, 2)" textAnchor="middle" fill={selectedArea === 'quiet' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="12">Quiet</text>
+              <motion.g onClick={() => setSelectedKey('quiet')} className="cursor-pointer" whileHover={{ y: -5 }}>
+                <rect x="330" y="20" width="100" height="130" rx="6" fill={selectedKey === 'quiet' ? '#8b5cf6' : '#ede9fe'} stroke="#8b5cf6" strokeWidth="2" />
+                <text x="380" y="95" transform="rotate(-45 380 95) scale(1, 2)" textAnchor="middle" fill={selectedKey === 'quiet' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="12">Quiet</text>
               </motion.g>
 
               {/* Reception */}
-              <motion.g onClick={() => setSelectedArea('reception')} className="cursor-pointer" whileHover={{ y: -5 }}>
-                <rect x="20" y="170" width="100" height="130" rx="6" fill={selectedArea === 'reception' ? '#3b82f6' : '#dbeafe'} stroke="#3b82f6" strokeWidth="2" />
-                <text x="70" y="245" transform="rotate(-45 70 245) scale(1, 2)" textAnchor="middle" fill={selectedArea === 'reception' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="12">Reception</text>
+              <motion.g onClick={() => setSelectedKey('reception')} className="cursor-pointer" whileHover={{ y: -5 }}>
+                <rect x="20" y="170" width="100" height="130" rx="6" fill={selectedKey === 'reception' ? '#3b82f6' : '#dbeafe'} stroke="#3b82f6" strokeWidth="2" />
+                <text x="70" y="245" transform="rotate(-45 70 245) scale(1, 2)" textAnchor="middle" fill={selectedKey === 'reception' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="12">Reception</text>
               </motion.g>
 
               {/* HR Desk */}
-              <motion.g onClick={() => setSelectedArea('hr')} className="cursor-pointer" whileHover={{ y: -5 }}>
-                <rect x="140" y="170" width="120" height="80" rx="6" fill={selectedArea === 'hr' ? '#ec4899' : '#fce7f3'} stroke="#ec4899" strokeWidth="2" />
-                <text x="200" y="215" transform="rotate(-45 200 215) scale(1, 2)" textAnchor="middle" fill={selectedArea === 'hr' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="12">HR Desk</text>
+              <motion.g onClick={() => setSelectedKey('hr')} className="cursor-pointer" whileHover={{ y: -5 }}>
+                <rect x="140" y="170" width="120" height="80" rx="6" fill={selectedKey === 'hr' ? '#ec4899' : '#fce7f3'} stroke="#ec4899" strokeWidth="2" />
+                <text x="200" y="215" transform="rotate(-45 200 215) scale(1, 2)" textAnchor="middle" fill={selectedKey === 'hr' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="12">HR Desk</text>
               </motion.g>
 
               {/* Engineering Pods */}
-              <motion.g onClick={() => setSelectedArea('engineering')} className="cursor-pointer" whileHover={{ y: -5 }}>
-                <rect x="140" y="270" width="290" height="80" rx="6" fill={selectedArea === 'engineering' ? '#1a2b4c' : '#e0e7ff'} stroke="#1a2b4c" strokeWidth="2" />
-                <text x="285" y="315" transform="rotate(-45 285 315) scale(1, 2)" textAnchor="middle" fill={selectedArea === 'engineering' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="13">Engineering</text>
+              <motion.g onClick={() => setSelectedKey('engineering')} className="cursor-pointer" whileHover={{ y: -5 }}>
+                <rect x="140" y="270" width="290" height="80" rx="6" fill={selectedKey === 'engineering' ? '#1a2b4c' : '#e0e7ff'} stroke="#1a2b4c" strokeWidth="2" />
+                <text x="285" y="315" transform="rotate(-45 285 315) scale(1, 2)" textAnchor="middle" fill={selectedKey === 'engineering' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="13">Engineering</text>
               </motion.g>
 
               {/* Meeting Rooms */}
-              <motion.g onClick={() => setSelectedArea('meeting')} className="cursor-pointer" whileHover={{ y: -5 }}>
-                <rect x="140" y="370" width="290" height="60" rx="6" fill={selectedArea === 'meeting' ? '#6b7280' : '#f3f4f6'} stroke="#6b7280" strokeWidth="2" />
-                <text x="285" y="405" transform="rotate(-45 285 405) scale(1, 2)" textAnchor="middle" fill={selectedArea === 'meeting' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="12">Meetings</text>
+              <motion.g onClick={() => setSelectedKey('meeting')} className="cursor-pointer" whileHover={{ y: -5 }}>
+                <rect x="140" y="370" width="290" height="60" rx="6" fill={selectedKey === 'meeting' ? '#6b7280' : '#f3f4f6'} stroke="#6b7280" strokeWidth="2" />
+                <text x="285" y="405" transform="rotate(-45 285 405) scale(1, 2)" textAnchor="middle" fill={selectedKey === 'meeting' ? '#fff' : '#1a2b4c'} fontWeight="bold" fontSize="12">Meetings</text>
               </motion.g>
             </g>
           </svg>
@@ -71,9 +145,9 @@ const OfficeExplorer = () => {
         {/* Info Panel */}
         <div className="flex-1 min-w-[300px]">
           <AnimatePresence mode="wait">
-            {selectedArea ? (
+            {selectedData ? (
               <motion.div
-                key={selectedArea}
+                key={selectedKey}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
@@ -83,39 +157,45 @@ const OfficeExplorer = () => {
                   <div className="p-2 bg-light-mint rounded-lg">
                     <MapPin className="w-6 h-6 text-soft-teal" />
                   </div>
-                  <h2 className="font-display text-xl font-bold text-deep-navy">{officeAreas[selectedArea].title}</h2>
+                  <h2 className="font-display text-xl font-bold text-deep-navy">{selectedData.name}</h2>
                 </div>
 
-                <p className="text-gray-600 leading-relaxed">{officeAreas[selectedArea].description}</p>
+                <p className="text-gray-600 leading-relaxed">{selectedData.description}</p>
 
                 <div className="space-y-4">
-                  <div>
-                    <h3 className="text-sm font-semibold text-deep-navy flex items-center gap-1.5 mb-2">
-                      <Info className="w-4 h-4 text-soft-teal" /> Good to know
-                    </h3>
-                    <ul className="space-y-1.5">
-                      {officeAreas[selectedArea].tips.map((tip, i) => (
-                        <li key={i} className="flex items-start text-sm text-gray-600">
-                          <span className="text-soft-teal mr-2 mt-0.5">•</span>
-                          {tip}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {selectedData.tips && selectedData.tips.length > 0 && (
+                    <div>
+                      <h3 className="text-sm font-semibold text-deep-navy flex items-center gap-1.5 mb-2">
+                        <Info className="w-4 h-4 text-soft-teal" /> Good to know
+                      </h3>
+                      <ul className="space-y-1.5">
+                        {selectedData.tips.map((tip, i) => (
+                          <li key={i} className="flex items-start text-sm text-gray-600">
+                            <span className="text-soft-teal mr-2 mt-0.5">•</span>
+                            {tip}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-                  <div>
-                    <h3 className="text-sm font-semibold text-deep-navy flex items-center gap-1.5 mb-1">
-                      <Users className="w-4 h-4 text-soft-teal" /> Who you'll meet
-                    </h3>
-                    <p className="text-sm text-gray-600">{officeAreas[selectedArea].whoYouMeet}</p>
-                  </div>
+                  {selectedData.who_you_can_meet && (
+                    <div>
+                      <h3 className="text-sm font-semibold text-deep-navy flex items-center gap-1.5 mb-1">
+                        <Users className="w-4 h-4 text-soft-teal" /> Who you'll meet
+                      </h3>
+                      <p className="text-sm text-gray-600">{selectedData.who_you_can_meet}</p>
+                    </div>
+                  )}
 
-                  <div className="rounded-xl bg-light-mint p-3">
-                    <h3 className="text-sm font-semibold text-deep-navy flex items-center gap-1.5 mb-1">
-                      <Lightbulb className="w-4 h-4 text-soft-teal" /> Why it matters for you
-                    </h3>
-                    <p className="text-sm text-deep-navy/70">{officeAreas[selectedArea].whyItMatters}</p>
-                  </div>
+                  {selectedData.why_it_matters && (
+                    <div className="rounded-xl bg-light-mint p-3">
+                      <h3 className="text-sm font-semibold text-deep-navy flex items-center gap-1.5 mb-1">
+                        <Lightbulb className="w-4 h-4 text-soft-teal" /> Why it matters for you
+                      </h3>
+                      <p className="text-sm text-deep-navy/70">{selectedData.why_it_matters}</p>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ) : (

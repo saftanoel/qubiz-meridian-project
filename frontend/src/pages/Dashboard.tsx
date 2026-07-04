@@ -1,17 +1,70 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Compass, MapPin, MessageCircle, Sparkles, Users, CircleCheck, TrendingUp, UsersRound, CalendarDays } from 'lucide-react';
+import { ArrowRight, Compass, MapPin, MessageCircle, Sparkles, Users, CircleCheck, TrendingUp, UsersRound, CalendarDays, Loader2, WifiOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { employeeData, nextActions, suggestedConnections, upcomingOfficeDays, journeyPhases } from '../lib/mockData';
+import { getDashboard } from '../lib/api';
+import { employeeData, nextActions as mockNextActions, suggestedConnections, upcomingOfficeDays as mockOfficeDays, journeyPhases } from '../lib/mockData';
+import type { DashboardResponse } from '../types/api';
 
 const Dashboard = () => {
-  const allTasks = journeyPhases.flatMap((p) => p.tasks);
-  const done = allTasks.filter((t) => t.status === 'done').length;
-  const inProgress = allTasks.filter((t) => t.status === 'in_progress').length;
-  const total = allTasks.length;
-  const pct = Math.round((done / total) * 100);
+  const [data, setData] = useState<DashboardResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    getDashboard()
+      .then((res) => { if (!cancelled) { setData(res); setError(false); } })
+      .catch(() => { if (!cancelled) setError(true); })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, []);
+
+  // Derive values — backend-first, mockData fallback
+  const hireName = data?.new_hire?.name ?? employeeData.name;
+  const pct = data?.progress_summary?.completion_percent ?? Math.round(journeyPhases.flatMap(p => p.tasks).filter(t => t.status === 'done').length / journeyPhases.flatMap(p => p.tasks).length * 100);
+  const done = data?.progress_summary?.done ?? journeyPhases.flatMap(p => p.tasks).filter(t => t.status === 'done').length;
+  const inProgress = data?.progress_summary?.in_progress ?? journeyPhases.flatMap(p => p.tasks).filter(t => t.status === 'in_progress').length;
+  const total = data?.progress_summary?.total ?? journeyPhases.flatMap(p => p.tasks).length;
+  const actions = data?.today_next_actions ?? mockNextActions;
+  const officeDays = data?.upcoming_office_days ?? mockOfficeDays;
+
+  // Suggested people — use backend with avatar_url, fallback to mock
+  const suggestedPeople = data?.suggested_people
+    ? data.suggested_people.map((p, i) => ({
+        id: p.id,
+        name: p.name,
+        role: p.role,
+        department: p.department,
+        reason: p.reason,
+        initials: p.initials,
+        color: i === 0 ? 'var(--color-subtle-peach)' : i === 1 ? 'var(--color-teal-soft)' : 'var(--color-light-mint)',
+        avatar_url: p.avatar_url,
+      }))
+    : suggestedConnections.map(c => ({ ...c, avatar_url: undefined as string | undefined }));
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-3">
+          <Loader2 className="h-8 w-8 text-soft-teal animate-spin mx-auto" />
+          <p className="text-sm text-slate-500 font-medium">Loading your dashboard…</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
+      {/* Backend error banner */}
+      {error && (
+        <div className="flex items-center gap-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl px-4 py-3 text-sm font-medium">
+          <WifiOff className="h-4 w-4 shrink-0" />
+          Could not reach the Meridian backend. Showing cached data. Please start the FastAPI server.
+        </div>
+      )}
+
       {/* ── Hero ── */}
       <motion.section
         initial={{ opacity: 0, y: 15 }}
@@ -24,7 +77,7 @@ const Dashboard = () => {
             <Sparkles className="h-3 w-3 text-soft-teal" /> Welcome to Meridian
           </div>
           <h1 className="font-display font-semibold text-3xl md:text-4xl lg:text-5xl text-deep-navy tracking-tight leading-[1.1]">
-            Hi {employeeData.name} — your first day starts in{' '}
+            Hi {hireName} — your first day starts in{' '}
             <span className="relative inline-block whitespace-nowrap">
               <span className="relative z-10">3 days</span>
               <span className="absolute inset-x-0 bottom-1.5 h-2 rounded-md bg-subtle-peach/80 mix-blend-multiply" />
@@ -65,7 +118,7 @@ const Dashboard = () => {
             </Link>
           </div>
           <ul className="space-y-2">
-            {nextActions.map((a) => {
+            {actions.map((a) => {
               const bg = a.tone === 'peach' ? 'bg-subtle-peach' : a.tone === 'teal' ? 'bg-teal-soft' : 'bg-sky';
               return (
                 <li key={a.id} className="group flex items-center gap-5 rounded-2xl border border-border-warm bg-card-soft p-4 hover:bg-card hover:border-border-hover hover:shadow-[0_4px_20px_rgba(55,40,20,0.05)] transition-all cursor-pointer">
@@ -137,11 +190,19 @@ const Dashboard = () => {
             </Link>
           </div>
           <div className="grid sm:grid-cols-3 gap-4">
-            {suggestedConnections.map((p) => (
+            {suggestedPeople.map((p) => (
               <div key={p.id} className="bg-card-soft border border-border-warm rounded-3xl p-5 hover:border-border-hover hover:shadow-[0_8px_30px_rgba(55,40,20,0.06)] transition-all cursor-pointer flex flex-col h-full group">
                 <div className="flex items-center gap-3">
-                  <div className="grid h-11 w-11 place-items-center rounded-2xl font-semibold text-deep-navy text-[15px] shadow-sm" style={{ background: p.color }}>
+                  <div className="grid h-11 w-11 place-items-center rounded-2xl font-semibold text-deep-navy text-[15px] shadow-sm relative overflow-hidden" style={{ background: p.color }}>
                     {p.initials}
+                    {p.avatar_url && (
+                      <img
+                        src={p.avatar_url}
+                        alt={`${p.name} profile photo`}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                      />
+                    )}
                   </div>
                   <div className="min-w-0">
                     <div className="text-[14px] font-bold text-deep-navy truncate group-hover:text-soft-teal transition-colors">{p.name}</div>
@@ -168,7 +229,7 @@ const Dashboard = () => {
             <CalendarDays className="h-4 w-4 text-slate-400" /> Upcoming office days
           </h2>
           <ul className="mt-5 space-y-2">
-            {upcomingOfficeDays.map((d) => {
+            {officeDays.map((d) => {
               const bg = d.tone === 'peach' ? 'bg-subtle-peach' : d.tone === 'teal' ? 'bg-teal-soft' : 'bg-sky';
               return (
                 <li key={d.date} className="flex items-center gap-4 rounded-2xl p-3 hover:bg-card-soft transition cursor-pointer border border-transparent hover:border-border-warm">

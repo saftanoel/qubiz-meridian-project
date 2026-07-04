@@ -1,14 +1,45 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { faqs, faqCategories, suggestedQuestions } from '../lib/mockData';
-import { Search, ChevronDown, ChevronUp, Sparkles, MessageCircle } from 'lucide-react';
+import { Search, ChevronDown, ChevronUp, Sparkles, MessageCircle, Loader2, WifiOff } from 'lucide-react';
+import { getResources } from '../lib/api';
+import { faqs as mockFaqs, suggestedQuestions } from '../lib/mockData';
+import type { Resource } from '../types/api';
 
 const AskMeridian = () => {
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
 
-  const filteredFaqs = faqs.filter((faq) => {
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    getResources()
+      .then((res) => {
+        if (!cancelled) {
+          setResources(res);
+          setError(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setError(true);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  const dataToUse = error || resources.length === 0 ? mockFaqs : resources;
+  
+  const categories = useMemo(() => {
+    return ['All', ...Array.from(new Set(dataToUse.map(r => r.category)))];
+  }, [dataToUse]);
+
+  const filteredFaqs = dataToUse.filter((faq) => {
     const matchesSearch =
       !searchTerm ||
       faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -22,8 +53,26 @@ const AskMeridian = () => {
     setActiveCategory('All');
   };
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-3">
+          <Loader2 className="h-8 w-8 text-soft-teal animate-spin mx-auto" />
+          <p className="text-sm text-slate-500 font-medium">Loading answers…</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8 max-w-3xl mx-auto">
+      {error && (
+        <div className="flex items-center gap-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl px-4 py-3 text-sm font-medium">
+          <WifiOff className="h-4 w-4 shrink-0" />
+          Could not reach the Meridian backend. Showing cached resources.
+        </div>
+      )}
+
       {/* Header */}
       <div className="text-center space-y-3">
         <div className="inline-flex items-center gap-2 rounded-full bg-light-mint px-3 py-1 text-xs font-medium text-soft-teal">
@@ -65,7 +114,7 @@ const AskMeridian = () => {
 
       {/* Category Filters */}
       <div className="flex flex-wrap justify-center gap-2">
-        {faqCategories.map((cat) => (
+        {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}

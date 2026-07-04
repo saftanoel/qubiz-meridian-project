@@ -1,15 +1,10 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { newHires, hrStats, actionItems, type HireStatus, type Severity } from '../lib/mockData';
-import { UsersRound, TrendingUp, UserPlus, AlertTriangle, MessageSquare, CheckCircle2, AlertCircle } from 'lucide-react';
+import { UsersRound, TrendingUp, UserPlus, AlertTriangle, MessageSquare, CheckCircle2, AlertCircle, Loader2, WifiOff } from 'lucide-react';
 import { showToast } from '../components/Toast';
-
-const statCards = [
-  { label: 'New hires this month', value: hrStats.newHiresCount, icon: UsersRound, color: 'bg-teal-50 text-teal-600', accent: 'border-teal-200' },
-  { label: 'Avg. onboarding progress', value: `${hrStats.avgProgress}%`, icon: TrendingUp, color: 'bg-blue-50 text-blue-600', accent: 'border-blue-200' },
-  { label: 'Missing buddy assignments', value: hrStats.missingBuddies, icon: UserPlus, color: 'bg-amber-50 text-amber-600', accent: 'border-amber-200' },
-  { label: 'Tasks overdue', value: hrStats.overdueTasks, icon: AlertTriangle, color: 'bg-rose-50 text-rose-600', accent: 'border-rose-200' },
-  { label: 'Pending check-ins', value: hrStats.pendingFeedback, icon: MessageSquare, color: 'bg-purple-50 text-purple-600', accent: 'border-purple-200' },
-];
+import { getHrOverview, updateHrActionItem } from '../lib/api';
+import { newHires as mockNewHires, hrStats as mockHrStats, actionItems as mockActionItems, type HireStatus, type Severity } from '../lib/mockData';
+import type { HrOverviewResponse } from '../types/api';
 
 const statusBadge: Record<HireStatus, { label: string; color: string; icon: React.ElementType }> = {
   on_track: { label: 'On track', color: 'bg-emerald-50 text-emerald-700', icon: CheckCircle2 },
@@ -28,13 +23,115 @@ const severityBtnStyles: Record<Severity, string> = {
   low: 'bg-blue-600 hover:bg-blue-700',
 };
 
+// Map backend severity to frontend styling types
+const severityMap: Record<string, Severity> = {
+  urgent: 'high',
+  warning: 'medium',
+  info: 'low'
+};
+
 const HRView = () => {
+  const [data, setData] = useState<HrOverviewResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [updatingId, setUpdatingId] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const res = await getHrOverview();
+      setData(res);
+      setError(false);
+    } catch (err) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAction = async (id: number, label: string) => {
+    if (error || !data) {
+      showToast(`✅ ${label} — action completed! (Offline mode)`);
+      return;
+    }
+
+    setUpdatingId(id);
+    try {
+      await updateHrActionItem(id, 'resolved');
+      showToast(`✅ ${label} — action completed!`);
+      // Refetch after success
+      await fetchData();
+    } catch (err) {
+      showToast('❌ Failed to update action item.');
+    } finally {
+      setUpdatingId(null);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center space-y-3">
+          <Loader2 className="h-8 w-8 text-soft-teal animate-spin mx-auto" />
+          <p className="text-sm text-slate-500 font-medium">Loading HR data…</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Fallback if backend is unavailable
+  const stats = data?.stats ?? {
+    new_hires_this_month: mockHrStats.newHiresCount,
+    average_onboarding_progress: mockHrStats.avgProgress,
+    missing_buddy_assignments: mockHrStats.missingBuddies,
+    overdue_tasks: mockHrStats.overdueTasks,
+    pending_checkins: mockHrStats.pendingFeedback,
+  };
+
+  const newHiresList = data?.new_hires ?? mockNewHires.map(h => ({
+    id: h.id,
+    name: h.name,
+    role: h.role,
+    department: h.department,
+    start_date: h.startDate,
+    buddy_name: h.buddy,
+    progress: h.progress,
+    status: h.status
+  }));
+
+  const activeActionItems = (data?.action_items ?? mockActionItems.map(a => ({
+    id: typeof a.id === 'string' ? parseInt(a.id) : a.id,
+    title: a.title,
+    description: a.description,
+    severity: Object.keys(severityMap).find(k => severityMap[k] === a.severity) || 'info',
+    action_label: a.buttonLabel,
+    status: 'open'
+  }))).filter(item => item.status !== 'resolved');
+
+  const statCards = [
+    { label: 'New hires this month', value: stats.new_hires_this_month, icon: UsersRound, color: 'bg-teal-50 text-teal-600', accent: 'border-teal-200' },
+    { label: 'Avg. onboarding progress', value: `${stats.average_onboarding_progress}%`, icon: TrendingUp, color: 'bg-blue-50 text-blue-600', accent: 'border-blue-200' },
+    { label: 'Missing buddy assignments', value: stats.missing_buddy_assignments, icon: UserPlus, color: 'bg-amber-50 text-amber-600', accent: 'border-amber-200' },
+    { label: 'Tasks overdue', value: stats.overdue_tasks, icon: AlertTriangle, color: 'bg-rose-50 text-rose-600', accent: 'border-rose-200' },
+    { label: 'Pending check-ins', value: stats.pending_checkins, icon: MessageSquare, color: 'bg-purple-50 text-purple-600', accent: 'border-purple-200' },
+  ];
+
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       <div>
         <h1 className="font-display text-4xl font-semibold text-deep-navy tracking-tight">HR Dashboard</h1>
         <p className="text-gray-500 mt-2 text-[15px]">Overview of all new hire onboarding — see what needs your attention.</p>
       </div>
+
+      {error && (
+        <div className="flex items-center gap-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl px-4 py-3 text-sm font-medium">
+          <WifiOff className="h-4 w-4 shrink-0" />
+          Could not reach the Meridian backend. Showing cached HR data.
+        </div>
+      )}
 
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -82,8 +179,8 @@ const HRView = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border-warm">
-                {newHires.map((hire) => {
-                  const status = statusBadge[hire.status];
+                {newHiresList.map((hire) => {
+                  const statusObj = statusBadge[hire.status as HireStatus] || statusBadge.on_track;
                   return (
                     <tr key={hire.id} className="hover:bg-card-soft transition-colors">
                       <td className="px-6 py-4">
@@ -98,10 +195,10 @@ const HRView = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4 text-sm text-gray-600">{hire.department}</td>
-                      <td className="px-6 py-4 text-sm text-gray-600">{hire.startDate}</td>
+                      <td className="px-6 py-4 text-sm text-gray-600">{hire.start_date}</td>
                       <td className="px-6 py-4">
-                        {hire.buddy ? (
-                          <span className="text-sm text-gray-600">{hire.buddy}</span>
+                        {hire.buddy_name ? (
+                          <span className="text-sm text-gray-600">{hire.buddy_name}</span>
                         ) : (
                           <span className="text-xs font-medium bg-rose-50 text-rose-600 px-2 py-0.5 rounded-full">Not assigned</span>
                         )}
@@ -118,9 +215,9 @@ const HRView = () => {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full ${status.color}`}>
-                          <status.icon className="w-3 h-3" />
-                          {status.label}
+                        <span className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full ${statusObj.color}`}>
+                          <statusObj.icon className="w-3 h-3" />
+                          {statusObj.label}
                         </span>
                       </td>
                     </tr>
@@ -132,8 +229,8 @@ const HRView = () => {
 
           {/* Mobile cards */}
           <div className="sm:hidden divide-y divide-border-warm">
-            {newHires.map((hire) => {
-              const status = statusBadge[hire.status];
+            {newHiresList.map((hire) => {
+              const statusObj = statusBadge[hire.status as HireStatus] || statusBadge.on_track;
               return (
                 <div key={hire.id} className="px-5 py-4 space-y-3">
                   <div className="flex items-center justify-between">
@@ -146,19 +243,19 @@ const HRView = () => {
                         <p className="text-xs text-gray-500">{hire.department}</p>
                       </div>
                     </div>
-                    <span className={`inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full ${status.color}`}>
-                      <status.icon className="w-3 h-3" />
-                      {status.label}
+                    <span className={`inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full ${statusObj.color}`}>
+                      <statusObj.icon className="w-3 h-3" />
+                      {statusObj.label}
                     </span>
                   </div>
                   <div className="grid grid-cols-3 gap-3 text-xs text-gray-500">
                     <div>
                       <p className="text-[10px] text-gray-400 uppercase">Start</p>
-                      <p>{hire.startDate}</p>
+                      <p>{hire.start_date}</p>
                     </div>
                     <div>
                       <p className="text-[10px] text-gray-400 uppercase">Buddy</p>
-                      <p>{hire.buddy || <span className="text-rose-500">Not assigned</span>}</p>
+                      <p>{hire.buddy_name || <span className="text-rose-500">Not assigned</span>}</p>
                     </div>
                     <div>
                       <p className="text-[10px] text-gray-400 uppercase">Progress</p>
@@ -189,23 +286,37 @@ const HRView = () => {
             Action Required
           </h2>
 
-          {actionItems.map((item) => (
-            <div
-              key={item.id}
-              className={`rounded-xl border p-4 space-y-3 ${severityStyles[item.severity]}`}
-            >
-              <div>
-                <h3 className="text-sm font-semibold text-deep-navy">{item.title}</h3>
-                <p className="text-xs text-gray-600 mt-1">{item.description}</p>
-              </div>
-              <button
-                onClick={() => showToast(`✅ ${item.buttonLabel} — action completed!`)}
-                className={`text-xs font-medium text-white px-3 py-2 rounded-lg transition-colors w-full cursor-pointer ${severityBtnStyles[item.severity]}`}
-              >
-                {item.buttonLabel}
-              </button>
+          {activeActionItems.length === 0 ? (
+            <div className="text-center py-8 bg-card-soft rounded-xl border border-border-warm">
+              <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
+              <p className="text-sm font-medium text-deep-navy">All caught up!</p>
+              <p className="text-xs text-gray-500 mt-1">No pending actions required.</p>
             </div>
-          ))}
+          ) : (
+            activeActionItems.map((item) => {
+              const severityLevel = severityMap[item.severity] || 'info';
+              const isUpdating = updatingId === item.id;
+              
+              return (
+                <div
+                  key={item.id}
+                  className={`rounded-xl border p-4 space-y-3 transition-opacity ${severityStyles[severityLevel]} ${isUpdating ? 'opacity-50' : ''}`}
+                >
+                  <div>
+                    <h3 className="text-sm font-semibold text-deep-navy">{item.title}</h3>
+                    <p className="text-xs text-gray-600 mt-1">{item.description}</p>
+                  </div>
+                  <button
+                    onClick={() => handleAction(item.id, item.action_label || 'Action')}
+                    disabled={isUpdating}
+                    className={`text-xs font-medium text-white px-3 py-2 rounded-lg transition-colors w-full cursor-pointer ${severityBtnStyles[severityLevel]}`}
+                  >
+                    {isUpdating ? 'Updating...' : item.action_label}
+                  </button>
+                </div>
+              );
+            })
+          )}
         </motion.div>
       </div>
     </div>

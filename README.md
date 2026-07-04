@@ -18,18 +18,20 @@ This is a monorepo containing:
 
 ## Running Locally
 
+### Backend
+```bash
+cd backend
+source venv/bin/activate
+pip install -r requirements.txt
+python3 -m uvicorn main:app --reload
+```
+*The backend runs on `http://127.0.0.1:8000`.*
+
 ### Frontend
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-
-### Backend
-```bash
-cd backend
-source venv/bin/activate
-# Note: If your virtual environment is named .venv, use `source .venv/bin/activate` instead
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
+*The frontend runs on `http://localhost:5173`.*
+*The API base URL can be configured with `VITE_API_BASE_URL` in an `.env` file (see `frontend/.env.example`).*
