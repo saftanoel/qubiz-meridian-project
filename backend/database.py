@@ -11,9 +11,23 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 
+
 def get_db():
     db = SessionLocal()
     try:
         yield db
+    finally:
+        db.close()
+
+
+def init_db():
+    """Create all tables and seed data."""
+    import models  # noqa: F401 — import so Base knows about all models
+    Base.metadata.create_all(bind=engine)
+
+    from seed import seed_database
+    db = SessionLocal()
+    try:
+        seed_database(db)
     finally:
         db.close()
