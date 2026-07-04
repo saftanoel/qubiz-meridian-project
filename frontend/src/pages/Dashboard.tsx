@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Compass, MapPin, MessageCircle, Sparkles, Users, CircleCheck, TrendingUp, UsersRound, CalendarDays, Loader2, WifiOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { showToast } from '../components/Toast';
 import { getDashboard, updateTaskStatus } from '../lib/api';
 import { employeeData, nextActions as mockNextActions, suggestedConnections, upcomingOfficeDays as mockOfficeDays, journeyPhases } from '../lib/mockData';
 import type { DashboardResponse } from '../types/api';
@@ -232,7 +233,13 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <p className="mt-4 text-[13px] text-slate-600 leading-relaxed line-clamp-2 flex-1">{p.reason}</p>
-                <button className="mt-4 w-full bg-card-soft border border-border-warm text-text-main hover:bg-card hover:border-border-hover text-[12.5px] font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all">
+                <button 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    showToast(`Coffee chat invitation sent to ${p.name}!`);
+                  }}
+                  className="mt-4 w-full bg-card-soft border border-border-warm text-text-main hover:bg-card hover:border-border-hover text-[12.5px] font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all"
+                >
                   <UsersRound className="h-3.5 w-3.5 text-soft-teal" /> Coffee chat
                 </button>
               </div>

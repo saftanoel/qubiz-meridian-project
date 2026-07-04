@@ -4,6 +4,7 @@ import { Search, MessageCircle, Coffee, Sparkles, X, UserRoundCheck, Loader2, Wi
 import { showToast } from '../components/Toast';
 import { getEmployees, getEmployeeMatches } from '../lib/api';
 import { allEmployees as mockAllEmployees } from '../lib/mockData';
+import ChatPopup from '../components/ChatPopup';
 import type { Employee, SuggestedPerson } from '../types/api';
 
 const Connect = () => {
@@ -16,6 +17,8 @@ const Connect = () => {
   const [deptFilter, setDeptFilter] = useState('All');
   const [dayFilter, setDayFilter] = useState<string | null>(null);
   const [interestFilter, setInterestFilter] = useState<string | null>(null);
+
+  const [activeChatEmployee, setActiveChatEmployee] = useState<Employee | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -126,9 +129,9 @@ const Connect = () => {
                   <div className="w-12 h-12 rounded-full bg-card grid place-items-center font-bold text-text-main text-[15px] shrink-0 shadow-sm relative overflow-hidden">
                     {person.initials}
                     {person.avatar_url && (
-                      <img 
-                        src={person.avatar_url} 
-                        alt={`${person.name} profile photo`} 
+                      <img
+                        src={person.avatar_url}
+                        alt={`${person.name} profile photo`}
                         className="absolute inset-0 w-full h-full object-cover"
                         onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                       />
@@ -171,9 +174,8 @@ const Connect = () => {
               <button
                 key={dept}
                 onClick={() => setDeptFilter(dept)}
-                className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  deptFilter === dept ? 'bg-text-main text-app shadow-sm' : 'bg-card-soft text-text-muted border border-border-warm hover:border-border-hover hover:bg-card'
-                }`}
+                className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${deptFilter === dept ? 'bg-text-main text-app shadow-sm' : 'bg-card-soft text-text-muted border border-border-warm hover:border-border-hover hover:bg-card'
+                  }`}
               >
                 {dept}
               </button>
@@ -186,9 +188,8 @@ const Connect = () => {
               <button
                 key={day}
                 onClick={() => setDayFilter(dayFilter === day ? null : day)}
-                className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  dayFilter === day ? 'bg-soft-teal text-white shadow-sm' : 'bg-card-soft text-text-muted border border-border-warm hover:border-border-hover hover:bg-card'
-                }`}
+                className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${dayFilter === day ? 'bg-soft-teal text-white shadow-sm' : 'bg-card-soft text-text-muted border border-border-warm hover:border-border-hover hover:bg-card'
+                  }`}
               >
                 {day}
               </button>
@@ -201,9 +202,8 @@ const Connect = () => {
               <button
                 key={interest}
                 onClick={() => setInterestFilter(interestFilter === interest ? null : interest)}
-                className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-                  interestFilter === interest ? 'bg-amber-500 text-white shadow-sm' : 'bg-card-soft text-amber-700 border border-border-warm hover:bg-card hover:border-border-hover'
-                }`}
+                className={`text-[12px] px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${interestFilter === interest ? 'bg-amber-500 text-white shadow-sm' : 'bg-card-soft text-amber-700 border border-border-warm hover:bg-card hover:border-border-hover'
+                  }`}
               >
                 {interest}
               </button>
@@ -241,7 +241,7 @@ const Connect = () => {
                   <img src={person.avatar_url} alt={`${person.name} profile photo`} className="w-[72px] h-[72px] rounded-2xl object-cover shadow-sm relative z-10" />
                 )}
               </div>
-              
+
               <div className="flex-1 min-w-0 pt-1">
                 <div className="flex items-start justify-between">
                   <div>
@@ -265,11 +265,10 @@ const Connect = () => {
                     const short = dayStr.substring(0, 3);
                     const isActive = person.office_days.some(d => d.day === dayStr);
                     return (
-                      <div key={dayStr} className={`flex-1 text-center py-1.5 rounded-full text-[11px] transition-colors ${
-                        isActive
+                      <div key={dayStr} className={`flex-1 text-center py-1.5 rounded-full text-[11px] transition-colors ${isActive
                           ? 'bg-soft-teal/20 text-teal-800 font-bold border border-soft-teal/30'
                           : 'bg-card-soft border border-border-warm text-text-muted font-medium'
-                      }`}>
+                        }`}>
                         {short}
                       </div>
                     );
@@ -315,14 +314,14 @@ const Connect = () => {
             {/* Actions */}
             <div className="flex gap-3 mt-5">
               <button
-                onClick={() => showToast(`Message sent to ${person.name}!`)}
+                onClick={() => setActiveChatEmployee(person)}
                 className="flex-1 text-[13.5px] font-semibold bg-text-main text-app py-2.5 px-4 rounded-full hover:opacity-90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               >
                 <MessageCircle className="w-4 h-4" />
                 Start conversation
               </button>
               <button
-                onClick={() => showToast(`Coffee chat scheduled with ${person.name}!`)}
+                onClick={() => showToast(`Coffee chat invitation sent to ${person.name}!`)}
                 className="text-[13.5px] font-semibold bg-card-soft text-text-main border border-border-warm py-2.5 px-4 rounded-full hover:bg-card hover:border-border-hover transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               >
                 <Coffee className="w-4 h-4" />
@@ -338,6 +337,12 @@ const Connect = () => {
           <p className="text-gray-400 text-sm">No colleagues match your filters. Try adjusting them.</p>
         </div>
       )}
+
+      <ChatPopup
+        isOpen={!!activeChatEmployee}
+        onClose={() => setActiveChatEmployee(null)}
+        employee={activeChatEmployee}
+      />
     </div>
   );
 };

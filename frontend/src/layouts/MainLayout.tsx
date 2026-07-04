@@ -38,8 +38,8 @@ const MainLayout = () => {
         <div className="p-5 pb-2">
           <Link to="/" className="inline-block cursor-pointer">
             <h1 className="text-xl font-bold text-text-main flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-              <div className="w-7 h-7 rounded-lg bg-accent-teal grid place-items-center shadow-sm">
-                <Compass className="w-4 h-4 text-app" />
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-soft-teal to-teal-600 grid place-items-center shadow-sm shrink-0">
+                <Compass className="w-5 h-5 text-white" />
               </div>
               <div className="flex items-baseline gap-1.5">
                 <span className="font-display">Meridian</span>
