@@ -17,9 +17,9 @@ const statusBadge: Record<HireStatus, { label: string; color: string; icon: Reac
 };
 
 const severityStyles: Record<Severity, string> = {
-  high: 'bg-rose-50 border-rose-200',
-  medium: 'bg-amber-50 border-amber-200',
-  low: 'bg-blue-50 border-blue-200',
+  high: 'bg-bg-danger border-border-danger',
+  medium: 'bg-bg-warning border-border-warning',
+  low: 'bg-bg-info border-border-info',
 };
 
 const severityBtnStyles: Record<Severity, string> = {
@@ -108,7 +108,7 @@ const HRView = () => {
                       </td>
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
-                          <div className="w-20 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                          <div className="w-20 h-1.5 bg-border-warm rounded-full overflow-hidden">
                             <div
                               className={`h-full rounded-full ${hire.status === 'on_track' ? 'bg-soft-teal' : 'bg-amber-400'}`}
                               style={{ width: `${hire.progress}%` }}
@@ -131,7 +131,7 @@ const HRView = () => {
           </div>
 
           {/* Mobile cards */}
-          <div className="sm:hidden divide-y divide-gray-100">
+          <div className="sm:hidden divide-y divide-border-warm">
             {newHires.map((hire) => {
               const status = statusBadge[hire.status];
               return (
@@ -165,7 +165,7 @@ const HRView = () => {
                       <p className="font-medium">{hire.progress}%</p>
                     </div>
                   </div>
-                  <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="w-full h-1.5 bg-border-warm rounded-full overflow-hidden">
                     <div
                       className={`h-full rounded-full ${hire.status === 'on_track' ? 'bg-soft-teal' : 'bg-amber-400'}`}
                       style={{ width: `${hire.progress}%` }}
