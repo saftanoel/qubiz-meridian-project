@@ -54,18 +54,18 @@ const HRView = () => {
 
   const handleAction = async (id: number, label: string) => {
     if (error || !data) {
-      showToast(`✅ ${label} — action completed! (Offline mode)`);
+      showToast(`${label} — action completed! (Offline mode)`);
       return;
     }
 
     setUpdatingId(id);
     try {
       await updateHrActionItem(id, 'resolved');
-      showToast(`✅ ${label} — action completed!`);
+      showToast(`${label} — action completed!`);
       // Refetch after success
       await fetchData();
     } catch (err) {
-      showToast('❌ Failed to update action item.');
+      showToast('Failed to update action item.');
     } finally {
       setUpdatingId(null);
     }
