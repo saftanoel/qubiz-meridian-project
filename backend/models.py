@@ -15,9 +15,15 @@ class Employee(Base):
     is_buddy = Column(Boolean, default=False)
     match_reason = Column(Text, nullable=True)
     ask_me_about = Column(Text, nullable=True)
+    usual_location_id = Column(Integer, ForeignKey("office_locations.id"), nullable=True)
 
     interests = relationship("EmployeeInterest", back_populates="employee", cascade="all, delete-orphan")
     office_days = relationship("EmployeeOfficeDay", back_populates="employee", cascade="all, delete-orphan")
+    usual_location = relationship("OfficeLocation", back_populates="employees")
+
+    @property
+    def usual_location_name(self):
+        return self.usual_location.name if self.usual_location else None
 
 
 class EmployeeInterest(Base):
@@ -85,6 +91,8 @@ class OfficeLocation(Base):
     tips = Column(Text, nullable=True)  # JSON string: ["tip1", "tip2"]
     who_you_can_meet = Column(Text, nullable=True)
     why_it_matters = Column(Text, nullable=True)
+
+    employees = relationship("Employee", back_populates="usual_location")
 
 
 class HrActionItem(Base):

@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Search, MessageCircle, Coffee, Sparkles, X, UserRoundCheck, Loader2, WifiOff } from 'lucide-react';
+import { Search, MessageCircle, Coffee, Sparkles, X, UserRoundCheck, Loader2, WifiOff, MapPin } from 'lucide-react';
 import { showToast } from '../components/Toast';
 import { getEmployees, getEmployeeMatches } from '../lib/api';
 import { allEmployees as mockAllEmployees } from '../lib/mockData';
@@ -41,7 +41,7 @@ const Connect = () => {
   }, []);
 
   // Use backend data or fallback to mock data
-  const dataToUse = error || employees.length === 0 ? mockAllEmployees.map(e => ({
+  const dataToUse: Employee[] = error || employees.length === 0 ? mockAllEmployees.map(e => ({
     id: e.id,
     name: e.name,
     role: e.role,
@@ -52,7 +52,7 @@ const Connect = () => {
     ask_me_about: e.askMeAbout || null,
     interests: e.interests.map((int, i) => ({ id: i, interest: int })),
     office_days: e.officeDays.map((day, i) => ({ id: i, day })),
-  })) : employees;
+  } as Employee)) : employees;
 
   const matchesToUse = error || matches.length === 0 ? mockAllEmployees.slice(0, 3).map(e => ({
     id: e.id,
@@ -258,6 +258,14 @@ const Connect = () => {
             </div>
 
             <div className="mt-6 flex-1 flex flex-col space-y-5">
+              {/* Usual Location */}
+              {person.usual_location_name && (
+                <div className="flex items-center gap-2 text-slate-500 text-[13px]">
+                  <MapPin className="w-4 h-4 text-soft-teal" />
+                  <span>Usually found in: <span className="font-medium text-deep-navy">{person.usual_location_name}</span></span>
+                </div>
+              )}
+
               {/* Office Days Pills */}
               <div>
                 <div className="flex items-center gap-1.5">

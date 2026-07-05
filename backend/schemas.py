@@ -30,6 +30,8 @@ class EmployeeOut(BaseModel):
     ask_me_about: Optional[str] = None
     interests: list[EmployeeInterestOut] = []
     office_days: list[EmployeeOfficeDayOut] = []
+    usual_location_id: Optional[int] = None
+    usual_location_name: Optional[str] = None
 
     model_config = {"from_attributes": True}
 
@@ -97,6 +99,15 @@ class ResourceOut(BaseModel):
 
 # ── Office ──
 
+class OfficeLocationPerson(BaseModel):
+    id: int
+    name: str
+    role: str
+    department: str
+    avatar_url: Optional[str] = None
+
+    model_config = {"from_attributes": True}
+
 class OfficeLocationOut(BaseModel):
     id: int
     name: str
@@ -104,6 +115,9 @@ class OfficeLocationOut(BaseModel):
     tips: list[str] = []
     who_you_can_meet: Optional[str] = None
     why_it_matters: Optional[str] = None
+    people: list[OfficeLocationPerson] = []
+
+    model_config = {"from_attributes": True}
 
 
 # ── HR ──

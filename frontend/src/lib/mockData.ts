@@ -267,13 +267,13 @@ export const faqs = [
   },
   {
     id: 2,
-    question: "How does hybrid work actually work here?",
+    question: "How does hybrid work actually work?",
     answer: "Each team has 'anchor days' — usually 2-3 days per week in the office. Engineering anchors on Wednesday and Thursday. Remote days are fully flexible. There's no micromanagement.",
-    category: "Hybrid Work",
+    category: "Hybrid Work"
   },
   {
     id: 3,
-    question: "Which Slack channels should I join first?",
+    question: "Who should I message first on Slack?",
     answer: "Start with #general, #new-joiners, and your team channel (#eng-frontend). For fun, try #random, #pets, and #lunch-plans. Don't worry about being in too many — you can always leave.",
     category: "Slack & Communication",
   },
@@ -287,11 +287,11 @@ export const faqs = [
     id: 5,
     question: "Who is my onboarding buddy?",
     answer: "Your onboarding buddy is Emily Wong from HR. She's your go-to for any question — even the ones that feel 'too small' to ask. Don't hesitate!",
-    category: "People",
+    category: "People"
   },
   {
     id: 6,
-    question: "Where do people eat lunch?",
+    question: "Where do I eat lunch?",
     answer: "Most people eat in the main kitchen/café area. Snacks are free and refilled on Mondays. Many teams do informal lunch together — just ask in your team's Slack channel.",
     category: "Office",
   },

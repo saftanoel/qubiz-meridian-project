@@ -11,7 +11,11 @@ router = APIRouter(prefix="/api", tags=["employees"])
 def get_employees(db: Session = Depends(get_db)):
     employees = (
         db.query(Employee)
-        .options(joinedload(Employee.interests), joinedload(Employee.office_days))
+        .options(
+            joinedload(Employee.interests),
+            joinedload(Employee.office_days),
+            joinedload(Employee.usual_location)
+        )
         .all()
     )
     return employees
@@ -25,7 +29,11 @@ def get_employee_matches(db: Session = Depends(get_db)):
     """
     employees = (
         db.query(Employee)
-        .options(joinedload(Employee.interests), joinedload(Employee.office_days))
+        .options(
+            joinedload(Employee.interests),
+            joinedload(Employee.office_days),
+            joinedload(Employee.usual_location)
+        )
         .all()
     )
 

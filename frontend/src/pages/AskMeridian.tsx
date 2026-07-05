@@ -9,7 +9,7 @@ const AskMeridian = () => {
   const [resources, setResources] = useState<Resource[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  
+
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [activeCategory, setActiveCategory] = useState('All');
@@ -34,7 +34,7 @@ const AskMeridian = () => {
   }, []);
 
   const dataToUse = error || resources.length === 0 ? mockFaqs : resources;
-  
+
   const categories = useMemo(() => {
     return ['All', ...Array.from(new Set(dataToUse.map(r => r.category)))];
   }, [dataToUse]);
@@ -118,11 +118,10 @@ const AskMeridian = () => {
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
-            className={`text-xs px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
-              activeCategory === cat
+            className={`text-xs px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${activeCategory === cat
                 ? 'bg-text-main text-app'
                 : 'bg-card-soft text-text-muted border border-border-warm hover:border-border-hover'
-            }`}
+              }`}
           >
             {cat}
           </button>
@@ -171,13 +170,6 @@ const AskMeridian = () => {
             No results found for "{searchTerm}". Try a different search term or category.
           </div>
         )}
-      </div>
-
-      {/* AI Note */}
-      <div className="text-center">
-        <p className="text-xs text-gray-400 max-w-md mx-auto">
-          💡 AI assistant integration could be added later using internal documentation and company policies.
-        </p>
       </div>
     </div>
   );

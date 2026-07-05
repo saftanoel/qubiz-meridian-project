@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Users, Lightbulb } from 'lucide-react';
+import { getOfficeLocations } from '../lib/api';
+import type { OfficeLocation } from '../types/api';
 
 const OFFICE_ZONES = [
   {
@@ -89,6 +91,13 @@ const OFFICE_ZONES = [
 const OfficeExplorer = () => {
   const [is3D, setIs3D] = useState(true);
   const [selectedZoneId, setSelectedZoneId] = useState<string | null>(null);
+  const [apiLocations, setApiLocations] = useState<OfficeLocation[]>([]);
+
+  useEffect(() => {
+    getOfficeLocations()
+      .then(setApiLocations)
+      .catch(console.error);
+  }, []);
 
   const selectedZone = OFFICE_ZONES.find(z => z.id === selectedZoneId) || null;
 
@@ -182,6 +191,29 @@ const OfficeExplorer = () => {
                         <Users className="w-4 h-4 text-soft-teal" /> Who you'll meet
                       </h3>
                       <p className="text-[13.5px] text-gray-600 font-medium">{selectedZone.whoYouCanMeet}</p>
+
+                      {(() => {
+                        const apiLoc = apiLocations.find(l => l.name === selectedZone.title);
+                        if (apiLoc && apiLoc.people && apiLoc.people.length > 0) {
+                          return (
+                            <div className="mt-3 flex flex-col gap-2 border-t border-border-warm pt-3">
+                              {apiLoc.people.map(person => (
+                                <div key={person.id} className="flex items-center gap-2">
+                                  {person.avatar_url ? (
+                                    <img src={person.avatar_url} alt={person.name} className="w-6 h-6 rounded-full object-cover" />
+                                  ) : (
+                                    <div className="w-6 h-6 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[10px] font-bold">
+                                      {person.name.charAt(0)}
+                                    </div>
+                                  )}
+                                  <span className="text-[12.5px] font-medium text-deep-navy">{person.name} <span className="text-slate-400 font-normal">· {person.role}</span></span>
+                                </div>
+                              ))}
+                            </div>
+                          );
+                        }
+                        return null;
+                      })()}
                     </div>
                   )}
 

@@ -105,6 +105,7 @@ export interface Employee {
   ask_me_about: string | null;
   interests: EmployeeInterest[];
   office_days: EmployeeOfficeDay[];
+  usual_location_name?: string;
 }
 
 // ── Resources ──
@@ -118,6 +119,14 @@ export interface Resource {
 
 // ── Office ──
 
+export interface OfficeLocationPerson {
+  id: number;
+  name: string;
+  role: string;
+  department: string;
+  avatar_url?: string;
+}
+
 export interface OfficeLocation {
   id: number;
   name: string;
@@ -125,6 +134,7 @@ export interface OfficeLocation {
   tips: string[];
   who_you_can_meet: string | null;
   why_it_matters: string | null;
+  people: OfficeLocationPerson[];
 }
 
 // ── HR ──
