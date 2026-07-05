@@ -37,6 +37,13 @@ This is a monorepo containing:
 
 ## Running the Project
 
+### Clone the Repository
+First, clone the repository to your local machine:
+```bash
+git clone https://github.com/saftanoel/qubiz-meridian-project.git
+cd qubiz-meridian-project
+```
+
 ### Backend
 The backend uses a local SQLite database that is automatically seeded on startup.
 
