@@ -1,31 +1,55 @@
 # Meridian Compass
 
-Meridian Compass is a web application designed to make the first month of onboarding significantly less chaotic for new employees at a 200-employee hybrid company.
+Meridian Compass is a full-stack onboarding web application designed to make the first month of work significantly less chaotic for new employees at Meridian, a fictional 200-employee hybrid IT company.
+
+## Documentation
+- [Assumptions](ASSUMPTIONS.md)
+- [Decisions](DECISIONS.md)
+- [What I Would Do Next](WHAT_I_WOULD_DO_NEXT.md)
+- [Reflection](REFLECTION.md)
+
+## Problem Statement
+Starting a new job often involves scattered emails, confusing wikis, and feeling disconnected from colleagues. Meridian Compass solves this by giving new hires a centralized, friendly hub that answers four critical questions:
+- What should I do?
+- Who should I meet?
+- Where should I go?
+- Who can answer my questions?
+
+## Main Features
+- **Dashboard / Compass**: A welcoming home screen with next actions, progress summary, and suggested people to meet.
+- **Meridian Journey**: A step-by-step checklist of onboarding tasks with real status updates synced to the backend.
+- **Meridian Connect**: An employee directory featuring department, interest, and office-day filtering, along with simulated "Start conversation" chat popups and "Coffee chat" invites.
+- **Office Explorer**: An interactive 3D/2D office map with clickable hotspots revealing room details and who typically sits where.
+- **Ask Meridian**: A searchable FAQ and resource library with preset common questions.
+- **HR View**: A dashboard for Meridian's sole HR manager to track new hire progress and prioritize actions.
+- **Light/Night Mode**: A fully supported UI theme toggle.
+- **Offline Fallback**: The frontend gracefully falls back to mock data if the backend is unavailable.
+
+## Tech Stack
+- **Frontend**: React, TypeScript, Vite, Tailwind CSS, Lucide React
+- **Backend**: Python, FastAPI, SQLite, SQLAlchemy, Pydantic
+- **Testing**: Playwright (E2E smoke tests)
 
 ## Project Structure
-
 This is a monorepo containing:
-- `frontend/`: React + TypeScript + Vite frontend.
-- `backend/`: Python + FastAPI backend.
+- `frontend/`: The React + Vite application
+- `backend/`: The Python + FastAPI application
 
-## Features (MVP)
-- **Dashboard / Compass**: Welcome card, next actions, progress.
-- **Meridian Journey**: 30-day onboarding checklist.
-- **Meridian Connect**: Employee directory with filters and interests.
-- **Meridian Office Explorer**: Interactive office map.
-- **Ask Meridian**: FAQ section.
-- **HR View**: Overview for HR personnel.
-
-## Running Locally
+## Running the Project
 
 ### Backend
+The backend uses a local SQLite database that is automatically seeded on startup.
+
 ```bash
 cd backend
+python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python3 -m uvicorn main:app --reload
 ```
 *The backend runs on `http://127.0.0.1:8000`.*
+
+> **Tip**: For a clean demo state, you can reset the database by deleting `backend/meridian.db` before starting the server.
 
 ### Frontend
 ```bash
@@ -34,36 +58,41 @@ npm install
 npm run dev
 ```
 *The frontend runs on `http://localhost:5173`.*
-*The API base URL can be configured with `VITE_API_BASE_URL` in an `.env` file (see `frontend/.env.example`).*
 
-## Running E2E Tests
-
-E2E smoke tests use [Playwright](https://playwright.dev/) and require both servers running.
-
-> **Tip:** For consistent results, delete `backend/meridian.db` before starting the backend so seed data is fresh.
-
-### 1. Start the backend
-```bash
-cd backend
-source venv/bin/activate
-python3 -m uvicorn main:app --reload
+**Environment Variables**
+The API base URL can be configured in a `.env` file (see `frontend/.env.example`):
+```env
+VITE_API_BASE_URL=http://127.0.0.1:8000/api
 ```
 
-### 2. Start the frontend
+### Build
 ```bash
 cd frontend
-npm run dev
+npm run build
 ```
 
-### 3. Run tests
+### Playwright E2E Tests
+Make sure both the frontend and backend servers are running before executing tests.
 ```bash
 cd frontend
 npm run test:e2e
 ```
 
-### Optional modes
-```bash
-npm run test:e2e:ui       # Interactive Playwright UI
-npm run test:e2e:headed   # Run in a visible browser
-```
+## Demo Context
+- The app is pre-configured with **George** as the demo new hire. 
+- You can toggle between the **New Hire** view and the **HR View** using the role switcher in the bottom-left corner of the sidebar.
 
+## Demo Video
+- The demo should be in English.
+- Maximum 3 minutes.
+- It demonstrates the main workflows of the application.
+- Naming format: `Firstname_Lastname`
+
+## Known Limitations
+- The "Start conversation" chat popup stores messages locally in the browser rather than in the backend.
+- There is no real Slack or Google Meet integration; buttons simulate the experience for MVP purposes.
+- The Office Explorer uses static 3D/2D rendered images with HTML hotspots rather than a WebGL 3D engine.
+- Ask Meridian is a static, searchable FAQ, not a generative AI agent.
+
+## Future Improvements
+Future iterations would introduce a real AI assistant for Ask Meridian, a fully interactive 3D office game, smarter employee matching based on current tasks, and real user authentication. (See `WHAT_I_WOULD_DO_NEXT.md` for details).
