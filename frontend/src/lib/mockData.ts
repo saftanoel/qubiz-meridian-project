@@ -123,7 +123,7 @@ export const allEmployees = [
     id: 2,
     name: "Andrei Pop",
     role: "Product Designer",
-    department: "Design",
+    department: "Engineering",
     interests: ["Photography", "Figma", "Dogs"],
     officeDays: ["Tuesday", "Wednesday"],
     askMeAbout: "Design system, dog-friendly parks nearby",
@@ -135,7 +135,7 @@ export const allEmployees = [
     id: 3,
     name: "Ioana Radu",
     role: "HR Partner",
-    department: "Human Resources",
+    department: "HR",
     interests: ["Reading", "Baking", "Yoga"],
     officeDays: ["Monday", "Tuesday", "Thursday"],
     askMeAbout: "Benefits, onboarding process, best bakeries in town",
@@ -146,38 +146,50 @@ export const allEmployees = [
   {
     id: 4,
     name: "Vlad Marinescu",
-    role: "Frontend Engineer",
-    department: "Engineering",
-    interests: ["React", "Gaming", "Anime"],
-    officeDays: ["Wednesday", "Friday"],
-    askMeAbout: "Frontend guild, video games, TypeScript patterns",
-    matchReason: "Shared interest: React — joined 3 months ago and remembers what it's like.",
+    role: "Marketing Specialist",
+    department: "Marketing",
+    interests: ["Design", "Photography", "Social Media"],
+    officeDays: ["Wednesday", "Thursday", "Friday"],
+    askMeAbout: "Meridian brand, internal events",
+    matchReason: "Knows the Meridian brand inside out — great for learning company culture.",
     isBuddy: false,
     avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop",
   },
   {
     id: 5,
-    name: "Ana Popescu",
-    role: "Marketing Lead",
-    department: "Marketing",
-    interests: ["Writing", "Running", "Podcasts"],
-    officeDays: ["Monday", "Thursday"],
-    askMeAbout: "Company brand, content strategy, running routes",
-    matchReason: "Runs the internal newsletter — a great way to learn what's happening.",
+    name: "Elena Stan",
+    role: "Finance Analyst",
+    department: "Finance",
+    interests: ["Excel", "Travel", "Movies"],
+    officeDays: ["Monday", "Wednesday", "Friday"],
+    askMeAbout: "Expenses, invoices, admin processes",
+    matchReason: "Handles expenses and invoices — helpful for admin questions in your first month.",
     isBuddy: false,
     avatarUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop",
   },
   {
     id: 6,
     name: "Tudor Munteanu",
-    role: "Data Analyst",
-    department: "Finance",
+    role: "Backend Engineer",
+    department: "Engineering",
     interests: ["Python", "Board Games", "Cooking"],
     officeDays: ["Tuesday", "Wednesday", "Friday"],
     askMeAbout: "Analytics tools, board game nights, lunch spots",
     matchReason: "Organizes the weekly board game social — easiest way to meet people.",
     isBuddy: false,
     avatarUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
+  },
+  {
+    id: 7,
+    name: "Sara Dumitrescu",
+    role: "Sales Lead",
+    department: "Sales",
+    interests: ["Running", "Podcasts", "Customer Stories"],
+    officeDays: ["Tuesday", "Wednesday", "Friday"],
+    askMeAbout: "Customer stories, quarterly goals, sales handoffs",
+    matchReason: "Bridges the gap between product and customers — great for understanding user needs.",
+    isBuddy: false,
+    avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop",
   },
 ];
 
@@ -252,10 +264,10 @@ export const faqCategories = [
 
 export const suggestedQuestions = [
   "What should I wear on my first day?",
-  "How does hybrid work actually work?",
+  "How does hybrid work at Meridian?",
   "Who should I message first on Slack?",
   "Where do I eat lunch?",
-  "How do I book a meeting room?",
+  "What departments does Meridian have?",
 ];
 
 export const faqs = [
@@ -267,8 +279,8 @@ export const faqs = [
   },
   {
     id: 2,
-    question: "How does hybrid work actually work?",
-    answer: "Each team has 'anchor days' — usually 2-3 days per week in the office. Engineering anchors on Wednesday and Thursday. Remote days are fully flexible. There's no micromanagement.",
+    question: "How does hybrid work at Meridian?",
+    answer: "Meridian follows a 3-days-in-office and 2-days-remote hybrid model. Team anchor days are used for collaboration, onboarding conversations, and meetings that benefit from being in person.",
     category: "Hybrid Work"
   },
   {
@@ -286,7 +298,7 @@ export const faqs = [
   {
     id: 5,
     question: "Who is my onboarding buddy?",
-    answer: "Your onboarding buddy is Emily Wong from HR. She's your go-to for any question — even the ones that feel 'too small' to ask. Don't hesitate!",
+    answer: "Your onboarding buddy is Ioana Radu from HR. She's your go-to for any question — even the ones that feel 'too small' to ask. Don't hesitate!",
     category: "People"
   },
   {
@@ -318,6 +330,18 @@ export const faqs = [
     question: "Is there a gym or wellness benefit?",
     answer: "Yes! Meridian covers up to $50/month for gym or wellness apps. Submit receipts through Expensify under 'Wellness'. There's also a quiet yoga room on the 3rd floor.",
     category: "HR & Admin",
+  },
+  {
+    id: 11,
+    question: "What departments does Meridian have?",
+    answer: "Meridian is organized around Engineering, Sales, Marketing, HR, and Finance. During onboarding, Meridian Compass helps you discover who belongs to each department and who can help with specific questions.",
+    category: "People",
+  },
+  {
+    id: 12,
+    question: "What communication tools does Meridian use?",
+    answer: "Meridian mainly uses Slack for day-to-day communication and Google Meet for video calls, onboarding sessions, and remote meetings.",
+    category: "Slack & Communication",
   },
 ];
 
@@ -351,11 +375,11 @@ export interface NewHire {
 export const newHires: NewHire[] = [
   {
     id: 1,
-    name: "Alex Doe",
+    name: "George",
     role: "Software Engineer",
     department: "Engineering",
     startDate: "Jul 7, 2026",
-    buddy: "Emily Wong",
+    buddy: "Ioana Radu",
     status: "on_track",
     progress: 25,
   },
