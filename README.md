@@ -89,11 +89,6 @@ npm run test:e2e
 - The app is pre-configured with **George** as the demo new hire. 
 - You can toggle between the **New Hire** view and the **HR View** using the role switcher in the bottom-left corner of the sidebar.
 
-## Demo Video
-- The demo should be in English.
-- Maximum 3 minutes.
-- It demonstrates the main workflows of the application.
-- Naming format: `Firstname_Lastname`
 
 ## Known Limitations
 - The "Start conversation" chat popup stores messages locally in the browser rather than in the backend.
