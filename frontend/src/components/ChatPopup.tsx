@@ -106,6 +106,7 @@ const ChatPopup = ({ isOpen, onClose, employee }: ChatPopupProps) => {
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ duration: 0.2 }}
           className="fixed bottom-6 right-6 z-[60] w-full max-w-[380px] bg-card rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-border-warm flex flex-col overflow-hidden sm:right-8 sm:bottom-8"
+          data-testid="chat-popup"
           style={{ maxHeight: '520px', height: 'calc(100vh - 100px)' }}
         >
           {/* Header */}
@@ -181,12 +182,14 @@ const ChatPopup = ({ isOpen, onClose, employee }: ChatPopupProps) => {
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 className="flex-1 bg-transparent border-none text-[14px] text-text-main placeholder-slate-400 focus:ring-0 px-3 py-2 min-w-0"
+                data-testid="chat-input"
               />
               <button
                 type="submit"
                 disabled={!inputValue.trim()}
                 aria-label="Send message"
                 className="w-9 h-9 shrink-0 rounded-full bg-text-main text-app flex items-center justify-center disabled:opacity-50 disabled:bg-slate-300 transition-colors"
+                data-testid="chat-send-button"
               >
                 <Send className="w-4 h-4 ml-[1px]" />
               </button>

@@ -247,7 +247,7 @@ const Journey = () => {
                                 : 'bg-card-soft border-border-warm hover:border-border-hover'
                             } ${isUpdating ? 'opacity-50 pointer-events-none' : ''}`}
                           >
-                            <button onClick={() => cycleStatus(phase.id, task.numId, task.status as TaskStatus)} className="mt-0.5 shrink-0 cursor-pointer disabled:opacity-50" disabled={error}>
+                            <button onClick={() => cycleStatus(phase.id, task.numId, task.status as TaskStatus)} className="mt-0.5 shrink-0 cursor-pointer disabled:opacity-50" disabled={error} data-testid="task-status-button">
                               <sc.icon className={`w-5 h-5 ${sc.color.split(' ')[0]} transition-all`} />
                             </button>
                             <div className="flex-1 min-w-0">

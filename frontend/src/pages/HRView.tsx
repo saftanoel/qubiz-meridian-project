@@ -280,6 +280,7 @@ const HRView = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
           className="space-y-4"
+          data-testid="hr-action-required"
         >
           <h2 className="font-display font-semibold text-deep-navy flex items-center gap-2">
             <AlertCircle className="w-5 h-5 text-amber-500" />
@@ -310,6 +311,7 @@ const HRView = () => {
                     onClick={() => handleAction(item.id, item.action_label || 'Action')}
                     disabled={isUpdating}
                     className={`text-xs font-medium text-white px-3 py-2 rounded-lg transition-colors w-full cursor-pointer ${severityBtnStyles[severityLevel]}`}
+                    data-testid="hr-action-button"
                   >
                     {isUpdating ? 'Updating...' : item.action_label}
                   </button>

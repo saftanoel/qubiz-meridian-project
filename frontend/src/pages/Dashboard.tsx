@@ -167,6 +167,7 @@ const Dashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
           className="card flex flex-col"
+          data-testid="dashboard-progress"
         >
           <h2 className="text-[17px] font-display font-semibold text-deep-navy tracking-wide flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-slate-400" /> First-week progress

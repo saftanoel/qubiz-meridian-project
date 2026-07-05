@@ -324,6 +324,7 @@ const Connect = () => {
               <button
                 onClick={() => setActiveChatEmployee(person)}
                 className="flex-1 text-[13.5px] font-semibold bg-text-main text-app py-2.5 px-4 rounded-full hover:opacity-90 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                data-testid="connect-start-conversation"
               >
                 <MessageCircle className="w-4 h-4" />
                 Start conversation

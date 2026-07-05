@@ -122,6 +122,7 @@ const OfficeExplorer = () => {
             <button 
               onClick={() => setIs3D(false)}
               className={`px-4 py-1.5 rounded-full text-[13px] font-bold transition-all cursor-pointer ${!is3D ? 'bg-soft-teal text-white shadow' : 'text-slate-500 hover:text-deep-navy'}`}
+              data-testid="office-map-toggle-2d"
             >
               2D
             </button>
@@ -150,6 +151,7 @@ const OfficeExplorer = () => {
                   onClick={() => setSelectedZoneId(zone.id)}
                   className={`absolute group transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center transition-all duration-300 z-20 cursor-pointer ${isSelected ? 'scale-125 z-30' : 'hover:scale-110'}`}
                   style={{ left: `${coords.x}%`, top: `${coords.y}%` }}
+                  data-testid={`office-pin-${zone.id}`}
                 >
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-lg transition-colors border-2 ${isSelected ? 'bg-soft-teal text-white border-white ring-4 ring-soft-teal/30' : 'bg-card text-deep-navy border-soft-teal hover:bg-soft-teal hover:text-white'}`}>
                     <MapPin className="w-4 h-4" />
@@ -174,6 +176,7 @@ const OfficeExplorer = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 className="card h-full space-y-5"
+                data-testid="office-details-panel"
               >
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-light-mint rounded-lg shrink-0">
